@@ -356,29 +356,32 @@ function sendDemo(e) {
   btn.classList.add('btn-pulse');
   label.textContent = 'Sending…';
 
-  const name = document.getElementById('cf-name')?.value.trim() || '';
-  const email = document.getElementById('cf-email')?.value.trim() || '';
-  const phone = document.getElementById('cf-phone')?.value.trim() || '';
-  const company = document.getElementById('cf-company')?.value.trim() || '';
-  const msg = document.getElementById('cf-msg')?.value.trim() || '';
+  const form = new FormData();
+  form.append('name', document.getElementById('cf-name')?.value.trim() || '');
+  form.append('email', document.getElementById('cf-email')?.value.trim() || '');
+  form.append('phone', document.getElementById('cf-phone')?.value.trim() || '');
+  form.append('company', document.getElementById('cf-company')?.value.trim() || '');
+  form.append('message', document.getElementById('cf-msg')?.value.trim() || '');
+  form.append('_subject', 'New project inquiry from qyroxis.com');
+  form.append('_template', 'table');
+  form.append('_captcha', 'false');
 
-  const subject = `New project inquiry from ${name || 'website visitor'}`;
-  const body = [
-    `Name: ${name}`,
-    `Email: ${email}`,
-    phone ? `Phone: ${phone}` : null,
-    company ? `Company: ${company}` : null,
-    '',
-    'Project details:',
-    msg
-  ].filter(line => line !== null).join('\n');
-  const mailto = `mailto:contact@qyroxis.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-  setTimeout(() => {
-    window.location.href = mailto;
-    label.textContent = "Opening your email app…";
-    setTimeout(() => { label.textContent = original; btn.classList.remove('btn-pulse'); delete btn.dataset.busy; }, 2400);
-  }, 700);
+  fetch('https://formsubmit.co/ajax/contact@qyroxis.com', {
+    method: 'POST',
+    body: form,
+    headers: { 'Accept': 'application/json' }
+  })
+    .then(r => r.json())
+    .then(data => {
+      label.textContent = (data.success === 'true' || data.success === true)
+        ? "Sent, we'll be in touch"
+        : 'Could not send, email us directly';
+      if (data.success === 'true' || data.success === true) e.target.reset();
+    })
+    .catch(() => { label.textContent = 'Could not send, email us directly'; })
+    .finally(() => {
+      setTimeout(() => { label.textContent = original; btn.classList.remove('btn-pulse'); delete btn.dataset.busy; }, 2600);
+    });
 }
 
 function pageHeaderHTML(eyebrowText, titleText, sub, decryptWord) {
