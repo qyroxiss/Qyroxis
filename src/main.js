@@ -63,7 +63,7 @@ const PROJECTS = [
     impact: "The platform achieved 99.99% uptime during its initial launch phase, scaling effortlessly. User onboarding times were reduced by 60% due to the optimized, secure authentication flow. GardenRich now supports a rapidly growing, engaged user base with zero compromises on operational security.",
     stats: [["99.99%", "platform uptime"], ["60%", "faster onboarding"]],
     tags: ["Flutter", "Dart", "Supabase", "Node.js", "Reactjs", "PostgreSQL"],
-    quote: "99.99% uptime from day one, and onboarding that's 60% faster    the platform just works, at scale.",
+    quote: "99.99% uptime from day one, and onboarding that's 60% faster. The platform just works, at scale.",
     quoteRole: "Product Lead, GardenRich"
   },
   {
@@ -86,34 +86,34 @@ const PROJECTS = [
     themeColor: "#F7E3E1",
     logoHTML: `<div style="font-family:Georgia,serif;font-style:italic;font-weight:700;font-size:1.7rem;color:#8C2A3A;">Charm <span style="color:#C62439;">Avenue</span></div>`,
     title: "Charm Avenue by Nandini", category: "D2C E-Commerce Platform",
-    description: "A full storefront and admin platform for a growing accessories brand    WhatsApp-first checkout instead of a payment gateway, built to move fast without transaction fees.",
-    fullDescription: "Charm Avenue by Nandini is a direct-to-consumer accessories and gifting brand. We built its storefront and back office as a single system    product catalog, cart, and a WhatsApp-based checkout flow, backed by a full admin panel for running the business day to day.",
-    challenge: "As a small, fast-moving D2C brand, Charm Avenue needed an online storefront without the overhead of a full payment-gateway integration or a heavyweight e-commerce platform. The catalog also needed to keep changing    new products, seasonal combos, sales    without waiting on a developer for every update.",
-    solution: "We built a Next.js and TypeScript storefront on Supabase (Postgres, Auth, Storage), with product variants, stock tracking, and time-boxed sale windows. Checkout routes straight into WhatsApp instead of a payment gateway, matching how the brand's customers already prefer to order. A full admin panel    products, categories, combo discounts, homepage content, and order management with automatic PDF invoicing    lets the team run the entire storefront themselves.",
-    impact: "Charm Avenue is live in production, with the brand's team managing its own catalog, homepage, and orders end to end through the admin panel    no payment gateway fees, and no developer needed to publish a new drop or run a sale.",
-    stats: [["0%", "payment gateway fees    checkout runs through WhatsApp"]],
+    description: "A full storefront and admin platform for a growing accessories brand, with WhatsApp-first checkout instead of a payment gateway, built to move fast without transaction fees.",
+    fullDescription: "Charm Avenue by Nandini is a direct-to-consumer accessories and gifting brand. We built its storefront and back office as a single system: product catalog, cart, and a WhatsApp-based checkout flow, backed by a full admin panel for running the business day to day.",
+    challenge: "As a small, fast-moving D2C brand, Charm Avenue needed an online storefront without the overhead of a full payment-gateway integration or a heavyweight e-commerce platform. The catalog also needed to keep changing: new products, seasonal combos, sales, without waiting on a developer for every update.",
+    solution: "We built a Next.js and TypeScript storefront on Supabase (Postgres, Auth, Storage), with product variants, stock tracking, and time-boxed sale windows. Checkout routes straight into WhatsApp instead of a payment gateway, matching how the brand's customers already prefer to order. A full admin panel, covering products, categories, combo discounts, homepage content, and order management with automatic PDF invoicing, lets the team run the entire storefront themselves.",
+    impact: "Charm Avenue is live in production, with the brand's team managing its own catalog, homepage, and orders end to end through the admin panel, with no payment gateway fees and no developer needed to publish a new drop or run a sale.",
+    stats: [["0%", "payment gateway fees, checkout runs through WhatsApp"]],
     tags: ["Next.js", "React", "TypeScript", "Supabase", "PostgreSQL", "Tailwind CSS"],
-    quote: "We can launch a new collection or run a sale ourselves, same day    no waiting on anyone.",
+    quote: "We can launch a new collection or run a sale ourselves, same day, no waiting on anyone.",
     quoteRole: "Founder, Charm Avenue by Nandini"
   }
 ];
 
 const SERVICES = [
   {
-    slug: "ai-automation", icon: "i-bot", title: "AI & Automation Agents", desc: "Autonomous systems that take on the manual work    lead generation, data extraction, qualification.",
-    detail: "We build autonomous agents that handle the repetitive, high-volume work your team shouldn't have to do by hand    browsing, extracting, qualifying, and acting on data at a scale manual research can't match.",
+    slug: "ai-automation", icon: "i-bot", title: "AI & Automation Agents", desc: "Autonomous systems that take on the manual work: lead generation, data extraction, qualification.",
+    detail: "We build autonomous agents that handle the repetitive, high-volume work your team shouldn't have to do by hand: browsing, extracting, qualifying, and acting on data at a scale manual research can't match.",
     examples: [], flow: ["i-doc", "i-bot", "i-check"],
     benefits: ["400% faster lead generation", "92% qualification accuracy", "No manual data entry", "Scales without extra headcount"]
   },
   {
-    slug: "web-mobile", icon: "i-layers", title: "Web & Mobile Platforms", desc: "Cross-platform products built once, shipped everywhere    Flutter, React, Next.js.",
+    slug: "web-mobile", icon: "i-layers", title: "Web & Mobile Platforms", desc: "Cross-platform products built once, shipped everywhere: Flutter, React, Next.js.",
     detail: "One codebase, every screen. We ship web and native mobile from a shared foundation, so your product feels consistent everywhere without doubling the build effort.",
     examples: ["gardenrich"], flow: ["i-code", "i-layers", "i-check"],
     benefits: ["One codebase, every platform", "99.99% uptime in production", "Consistent UX across devices", "Faster iteration cycles"]
   },
   {
     slug: "ecommerce-payments", icon: "i-cart", title: "E-Commerce & Payments", desc: "Ordering, reservations, and custom payment flows that cut out unnecessary fees.",
-    detail: "From checkout to reservations to custom payment routing, we build commerce systems tuned to how the business actually operates    including cutting out fees that don't need to exist.",
+    detail: "From checkout to reservations to custom payment routing, we build commerce systems tuned to how the business actually operates, including cutting out fees that don't need to exist.",
     examples: ["rasoi", "charm-avenue"], flow: ["i-cart", "i-diag", "i-check"],
     benefits: ["Custom payment flows, lower fees", "Real-time reservation management", "Built for multi-location scale", "3% margin recovered on digital orders"]
   },
@@ -125,23 +125,23 @@ const SERVICES = [
   },
   {
     slug: "full-stack", icon: "i-code", title: "Custom Full-Stack Development", desc: "End-to-end builds, database to deployment, tailored to how the business runs.",
-    detail: "When nothing off-the-shelf fits, we build the whole thing    schema to server to interface    shaped around your actual workflow instead of forcing your workflow to fit a template.",
+    detail: "When nothing off-the-shelf fits, we build the whole thing, schema to server to interface, shaped around your actual workflow instead of forcing your workflow to fit a template.",
     examples: ["pulse"], flow: ["i-doc", "i-code", "i-layers"],
     benefits: ["Schema to deployment, end to end", "Row-level security by default", "Built around your real workflow", "Supported after launch"]
   }
 ];
 
 const VALUE_PROPS_HOME = [
-  { icon: "i-shield", title: "Production-ready from day one", desc: "What we build is stable and secure from the start    no rebuild, no scramble before it goes live." },
-  { icon: "i-layers", title: "One system, not a pile of point tools", desc: "We design for how the pieces connect    data, automation, interface    so nothing is glued together after the fact." },
+  { icon: "i-shield", title: "Production-ready from day one", desc: "What we build is stable and secure from the start: no rebuild, no scramble before it goes live." },
+  { icon: "i-layers", title: "One system, not a pile of point tools", desc: "We design for how the pieces connect: data, automation, interface, so nothing is glued together after the fact." },
   { icon: "i-code", title: "Built to scale with you", desc: "Architecture decisions are made for where you're headed, not just where you are today." }
 ];
 
 const PROCESS = [
-  { icon: "i-search", title: "Scope, not guesswork", desc: "We start from real constraints    data, users, deadlines    not a generic template." },
+  { icon: "i-search", title: "Scope, not guesswork", desc: "We start from real constraints: data, users, deadlines, not a generic template." },
   { icon: "i-code", title: "Built for production", desc: "Every system is engineered to run under real load, not just demo well in a meeting." },
   { icon: "i-rocket", title: "Shipped, then supported", desc: "Launch is the midpoint. We stay on to fix, extend, and scale what we built." },
-  { icon: "i-check", title: "Measured by outcomes", desc: "Success is a number that moved    leads, uptime, retrieval time    not a screenshot." }
+  { icon: "i-check", title: "Measured by outcomes", desc: "Success is a number that moved: leads, uptime, retrieval time, not a screenshot." }
 ];
 
 const VALUES = [
@@ -153,10 +153,10 @@ const VALUES = [
 ];
 
 const TIMELINE = [
-  { year: "2026", title: "Studio founded", desc: "Founded in Bengaluru, then based out of Kanpur    built to engineer full-stack, cross-platform, and AI-driven software from day one." },
-  { year: "2026", title: "First AI agent shipped", desc: "Our first proprietary AI lead-generation agent goes live    autonomously analyzing target companies and drafting personalized outbound campaigns." },
+  { year: "2026", title: "Studio founded", desc: "Founded in Bengaluru, then based out of Kanpur, built to engineer full-stack, cross-platform, and AI-driven software from day one." },
+  { year: "2026", title: "First AI agent shipped", desc: "Our first proprietary AI lead-generation agent goes live, autonomously analyzing target companies and drafting personalized outbound campaigns." },
   { year: "2026", title: "Expanded into new industries", desc: "The same year of iteration carried us into fitness (gym management ecosystems), healthcare, and e-commerce, adapting our architecture to each vertical." },
-  { year: "2026", title: "Today", desc: "Building smarter web platforms and autonomous digital agents    deeper LLM integrations and new AI-driven products are next." }
+  { year: "2026", title: "Today", desc: "Building smarter web platforms and autonomous digital agents; deeper LLM integrations and new AI-driven products are next." }
 ];
 
 const FOOTER_SERVICES = ["AI Agents", "Web Platforms", "Mobile Apps", "E-Commerce", "Healthcare Software", "Full-Stack Dev"];
@@ -213,7 +213,6 @@ function renderProcessBlock() {
     <div class="wrap">
       <div class="block-head">
         <div><span class="eyebrow">( How we work )</span><h2>Process, not<br/>promises</h2></div>
-        <span class="draft-tag">Draft    confirm real process</span>
       </div>
       <div class="process-flow-layout">
         <div class="process-flow" id="processFlow">
@@ -253,7 +252,7 @@ function projectCard(p, featured) {
         <div class="pc-bottom">
           <div class="pc-title-wrap">
             <h3>${p.title}</h3>
-            <p class="pc-domain">${p.domain || '[domain    placeholder]'}</p>
+            <p class="pc-domain">${p.domain || '[domain placeholder]'}</p>
           </div>
           <span class="pc-arrow">${icon('i-arrow')}</span>
         </div>
@@ -356,10 +355,30 @@ function sendDemo(e) {
   btn.dataset.busy = '1';
   btn.classList.add('btn-pulse');
   label.textContent = 'Sending…';
+
+  const name = document.getElementById('cf-name')?.value.trim() || '';
+  const email = document.getElementById('cf-email')?.value.trim() || '';
+  const phone = document.getElementById('cf-phone')?.value.trim() || '';
+  const company = document.getElementById('cf-company')?.value.trim() || '';
+  const msg = document.getElementById('cf-msg')?.value.trim() || '';
+
+  const subject = `New project inquiry from ${name || 'website visitor'}`;
+  const body = [
+    `Name: ${name}`,
+    `Email: ${email}`,
+    phone ? `Phone: ${phone}` : null,
+    company ? `Company: ${company}` : null,
+    '',
+    'Project details:',
+    msg
+  ].filter(line => line !== null).join('\n');
+  const mailto = `mailto:contact@qyroxis.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
   setTimeout(() => {
-    label.textContent = "Sent    we'll be in touch";
+    window.location.href = mailto;
+    label.textContent = "Opening your email app…";
     setTimeout(() => { label.textContent = original; btn.classList.remove('btn-pulse'); delete btn.dataset.busy; }, 2400);
-  }, 900);
+  }, 700);
 }
 
 function pageHeaderHTML(eyebrowText, titleText, sub, decryptWord) {
@@ -437,7 +456,7 @@ function pageHome() {
   <section class="block" style="padding-top:0;">
     <div class="wrap">
       <div class="block-head">
-        <div><div style="display:flex;align-items:center;gap:10px;"><span class="eyebrow">( What we build )</span><span class="draft-tag">Draft    confirm services list</span></div><h2>Full-stack<br/>digital products</h2></div>
+        <div><span class="eyebrow">( What we build )</span><h2>Full-stack<br/>digital products</h2></div>
         <a class="btn btn-ghost" href="#/services" data-nav>All services ${icon('i-arrow', 'btn-icon')}</a>
       </div>
       <div class="service-visual-grid">
@@ -467,7 +486,7 @@ function pageHome() {
   <section class="block testi-band">
     <div class="wrap">
       <span class="eyebrow">( What clients say )</span>
-      <p class="testi-quote-big" id="testiQuote">"Qyroxis felt like an extension of our own team    clear communication, shipped fast, and the systems haven't needed a single fire drill since launch."</p>
+      <p class="testi-quote-big" id="testiQuote">"Qyroxis felt like an extension of our own team: clear communication, shipped fast, and the systems haven't needed a single fire drill since launch."</p>
       <p class="testi-who-big">Founder, early-stage SaaS client</p>
     </div>
   </section>
@@ -477,7 +496,7 @@ function pageHome() {
     <div class="wrap inner">
       <span class="eyebrow">( Let's talk )</span>
       <h2>Have a project in mind?</h2>
-      <p class="sub">Tell us what you're building    we'll tell you how to ship it.</p>
+      <p class="sub">Tell us what you're building, we'll tell you how to ship it.</p>
       <div class="hero-ctas"><a class="btn btn-primary" href="#/contact" data-nav>Start a project</a></div>
     </div>
   </section>`;
@@ -497,7 +516,7 @@ function pageWork() {
     <div class="wrap inner">
       <span class="eyebrow">( Let's talk )</span>
       <h2>Let's create your success story.</h2>
-      <p class="sub">Tell us what you're building    we'll tell you how to ship it.</p>
+      <p class="sub">Tell us what you're building, we'll tell you how to ship it.</p>
       <div class="hero-ctas"><a class="btn btn-primary" href="#/contact" data-nav>Start a project</a></div>
     </div>
   </section>`;
@@ -520,10 +539,10 @@ function pageDetail(id) {
   <div class="wrap">
     <div class="detail-hero-thumb${p.thumb ? ' has-image' : ''} reveal">
       ${p.thumb ? `<img src="${p.thumb}" alt="" loading="lazy" /><span class="thumb-tint"></span>` : icon(p.icon, 'thumb-icon')}
-      <span class="domain-tag">${p.domain || '[domain    placeholder]'}</span>
+      <span class="domain-tag">${p.domain || '[domain placeholder]'}</span>
       ${liveHref
       ? `<a class="visit-btn" href="${liveHref}" target="_blank" rel="noopener noreferrer">Visit live site ${icon('i-diag', 'btn-icon')}</a>`
-      : `<span class="visit-btn" style="opacity:0.5; cursor:default;">Live site  [placeholder]</span>`}
+      : `<span class="visit-btn" style="opacity:0.5; cursor:default;">Live site [placeholder]</span>`}
     </div>
   </div>
 
@@ -577,7 +596,7 @@ function pageDetail(id) {
     <div class="wrap inner">
       <span class="eyebrow">( Let's talk )</span>
       <h2>Ready to build?</h2>
-      <p class="sub">Tell us what you're building    we'll tell you how to ship it.</p>
+      <p class="sub">Tell us what you're building, we'll tell you how to ship it.</p>
       <div class="hero-ctas"><a class="btn btn-primary" href="#/contact" data-nav>Start a project</a></div>
     </div>
   </section>`;
@@ -605,7 +624,7 @@ function pageServices() {
     <div class="wrap inner">
       <span class="eyebrow">( Let's talk )</span>
       <h2>Not sure which of these fits?</h2>
-      <p class="sub">Tell us the problem, not the service name    we'll figure out the right shape for it.</p>
+      <p class="sub">Tell us the problem, not the service name, we'll figure out the right shape for it.</p>
       <div class="hero-ctas"><a class="btn btn-primary" href="#/contact" data-nav>Start a project</a></div>
     </div>
   </section>`;
@@ -672,7 +691,7 @@ function pageServiceDetail(slug) {
     <div class="wrap inner">
       <span class="eyebrow">( Let's talk )</span>
       <h2>Ready to start?</h2>
-      <p class="sub">Tell us what you're building    we'll tell you how to ship it.</p>
+      <p class="sub">Tell us what you're building, we'll tell you how to ship it.</p>
       <div class="hero-ctas"><a class="btn btn-primary" href="#/contact" data-nav>Start a project</a></div>
     </div>
   </section>`;
@@ -734,7 +753,7 @@ function pageAbout() {
     <div class="wrap inner">
       <span class="eyebrow">( Let's talk )</span>
       <h2>Let's write the next chapter together.</h2>
-      <p class="sub">Tell us what you're building    we'll tell you how to ship it.</p>
+      <p class="sub">Tell us what you're building, we'll tell you how to ship it.</p>
       <div class="hero-ctas"><a class="btn btn-primary" href="#/contact" data-nav>Start a project</a></div>
     </div>
   </section>`;
@@ -752,7 +771,7 @@ function pagePrivacy() {
         <p>Qyroxis ("we", "us", "our") is a software and AI engineering studio based in Bangalore, India. This policy explains what information we collect through qyroxis.com, how we use it, and the choices you have.</p>
 
         <h2>Information we collect</h2>
-        <p>When you reach out through our contact form or by email, we collect what you choose to share    typically your name, email address, company, and details about your project. If you provide a phone number, we collect that too. We don't require any of this information to browse the site.</p>
+        <p>When you reach out through our contact form or by email, we collect what you choose to share, typically your name, email address, company, and details about your project. If you provide a phone number, we collect that too. We don't require any of this information to browse the site.</p>
         <p>We also store one small piece of data locally in your browser: your light/dark theme preference. This is saved via <code>localStorage</code> on your device, is never transmitted to us, and contains no personal information.</p>
 
         <h2>Cookies and tracking</h2>
@@ -803,13 +822,13 @@ function pageTerms() {
         <p>By using qyroxis.com, you agree to these terms. If you don't agree, please don't use the site.</p>
 
         <h2>Use of this website</h2>
-        <p>This site is provided for informational purposes    to showcase Qyroxis's services, portfolio, and process. Project write-ups describe real engagements and their outcomes to the best of our knowledge; figures are provided in good faith by us or our clients and are not audited third-party statistics.</p>
+        <p>This site is provided for informational purposes, to showcase Qyroxis's services, portfolio, and process. Project write-ups describe real engagements and their outcomes to the best of our knowledge; figures are provided in good faith by us or our clients and are not audited third-party statistics.</p>
 
         <h2>Intellectual property</h2>
         <p>The design, code, copy, and branding of this website belong to Qyroxis unless otherwise noted. Case studies reference client products and trademarks, which remain the property of their respective owners. Nothing on this site grants you a license to reuse our branding, code, or content without permission.</p>
 
         <h2>Client engagements</h2>
-        <p>This website is not itself a contract for services. Any paid engagement with Qyroxis    scope, pricing, timelines, IP ownership, and confidentiality    is governed by a separate written agreement signed by both parties, which takes precedence over anything described here.</p>
+        <p>This website is not itself a contract for services. Any paid engagement with Qyroxis, covering scope, pricing, timelines, IP ownership, and confidentiality, is governed by a separate written agreement signed by both parties, which takes precedence over anything described here.</p>
 
         <h2>No warranty</h2>
         <p>This site and its content are provided "as is," without warranties of any kind, express or implied. We don't guarantee the site will be uninterrupted, error-free, or continuously available.</p>
