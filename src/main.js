@@ -346,6 +346,7 @@ function footer() {
   </footer>`;
 }
 
+window.sendDemo = sendDemo;
 function sendDemo(e) {
   e.preventDefault();
   const btn = document.getElementById('contactSubmit');
