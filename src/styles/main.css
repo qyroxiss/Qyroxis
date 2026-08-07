@@ -587,7 +587,7 @@ nav.top-nav.scrolled {
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: clamp(120px, 16vw, 180px) 24px clamp(56px, 8vw, 90px);
+  padding: clamp(120px, 16vw, 180px) clamp(16px, 5vw, 24px) clamp(56px, 8vw, 90px);
 }
 
 .hero-wash {
@@ -819,6 +819,38 @@ nav.top-nav.scrolled {
   margin: 0 14px;
   margin-top: 27px;
   background: var(--hero-border);
+}
+
+/* below ~600px the full-phrase labels ("Qyroxis builds it") no longer fit three across;
+   let labels wrap to two lines and tighten the connectors instead of dropping a step to its own row */
+@media (max-width: 600px) {
+  .hero-flow {
+    gap: 0;
+  }
+
+  .hero-flow .hf-label {
+    white-space: normal;
+    max-width: 78px;
+    line-height: 1.25;
+  }
+
+  .hero-flow .flow-connector {
+    width: 20px;
+    margin: 0 4px;
+    margin-top: 27px;
+  }
+}
+
+@media (max-width: 380px) {
+  .hero-flow .hf-label {
+    max-width: 66px;
+    font-size: 0.7rem;
+  }
+
+  .hero-flow .flow-connector {
+    width: 12px;
+    margin: 0 3px;
+  }
 }
 
 /* services as visual cards (icon-flow diagram, not text-only rows) */
@@ -1533,6 +1565,7 @@ section.block {
 }
 
 .pc-badge {
+  max-width: 68%;
   padding: 5px 12px;
   border-radius: 999px;
   background: color-mix(in srgb, var(--bg-card) 88%, transparent);
@@ -1543,9 +1576,13 @@ section.block {
   text-transform: uppercase;
   color: var(--text);
   border: 1px solid var(--border);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .pc-year {
+  flex: none;
   font-family: var(--font-mono);
   font-size: 0.7rem;
   color: var(--text-faint);
