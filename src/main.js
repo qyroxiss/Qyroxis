@@ -10,6 +10,12 @@ import thumbPulse from './assets/img/projects/pulse.jpg';
 import logoRasoi from './assets/img/logos/rasoi-logo.png';
 import logoRajfilms from './assets/img/logos/rajfilms-logo.jpg';
 import logoPulse from './assets/img/logos/pulse-logo.jpg';
+import rasoiShotOurMenu from './assets/img/projects/rasoi/desktop-our-menu.png';
+import rasoiShotReservation from './assets/img/projects/rasoi/desktop-reservation.png';
+import rasoiShotManageMenuDesktop from './assets/img/projects/rasoi/desktop-manage-menu.png';
+import rasoiShotAdminOverview from './assets/img/projects/rasoi/mobile-admin-overview.png';
+import rasoiOrderVideo from './assets/img/projects/rasoi/order-menu.mp4';
+import rasoiOrderPoster from './assets/img/projects/rasoi/order-menu-poster.jpg';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
@@ -34,7 +40,14 @@ const PROJECTS = [
     stats: [["3%", "net margin increase"]],
     tags: ["Node.js", "Reactjs", "Supabase", "PostgreSQL", "Next.js", "JavaScript"],
     quote: "Cutting out gateway fees put 3% straight back into our margins, and table turnover has never been smoother.",
-    quoteRole: "Owner, Rasoi by TSN"
+    quoteRole: "Owner, Rasoi by TSN",
+    screens: [
+      { type: "laptop", kind: "image", src: rasoiShotOurMenu, caption: "Customer-facing storefront" },
+      { type: "phone", kind: "video", src: rasoiOrderVideo, poster: rasoiOrderPoster, caption: "Live order flow" },
+      { type: "laptop", kind: "image", src: rasoiShotReservation, caption: "Table reservations, booked online" },
+      { type: "phone", kind: "image", src: rasoiShotAdminOverview, caption: "Real-time order sync" },
+      { type: "laptop", kind: "image", src: rasoiShotManageMenuDesktop, caption: "Staff-side menu management" }
+    ]
   },
   {
     id: "rajfilms", icon: "i-camera", domain: "rajfilmsstudio.in", thumb: thumbRajfilms, year: "2026",
@@ -185,6 +198,30 @@ function flowDiagramHTML(icons) {
   return `<div class="flow-diagram">${icons.map((ic, i) =>
     `${i > 0 ? '<span class="flow-connector"><span class="flow-dot"></span></span>' : ''}<span class="flow-node">${icon(ic)}</span>`
   ).join('')}</div>`;
+}
+
+// device-framed showcase gallery on a project's detail page: a mix of "laptop"
+// and "phone" mockups (stills or an autoplaying muted video) instead of one flat screenshot.
+function deviceGalleryHTML(p) {
+  if (!p.screens || !p.screens.length) return '';
+  return `<div class="wrap">
+    <section class="detail-gallery">
+      <div class="gallery-grid">
+        ${p.screens.map((s, i) => `
+          <div class="gallery-item gi-${s.type}${i === 0 ? ' gi-feature' : ''} reveal">
+            <div class="device-frame ${s.type}">
+              ${s.type === 'laptop'
+              ? `<div class="device-bar"><span class="db-dot"></span><span class="db-dot"></span><span class="db-dot"></span><span class="device-url">${p.domain || ''}</span></div>`
+              : `<span class="device-notch"></span>`}
+              <div class="device-screen">${s.kind === 'video'
+              ? `<video autoplay muted loop playsinline poster="${s.poster}"><source src="${s.src}" type="video/mp4" /></video>`
+              : `<img src="${s.src}" alt="${s.caption || ''}" loading="lazy" />`}</div>
+            </div>
+            ${s.caption ? `<p class="gallery-cap">${s.caption}</p>` : ''}
+          </div>`).join('')}
+      </div>
+    </section>
+  </div>`;
 }
 
 function tagRow(tags) {
@@ -547,6 +584,7 @@ function pageDetail(id) {
       : `<span class="visit-btn" style="opacity:0.5; cursor:default;">Live site [placeholder]</span>`}
     </div>
   </div>
+  ${deviceGalleryHTML(p)}
 
   <section class="detail-stats-band">
     <div class="wrap stat-grid-3">
@@ -1361,7 +1399,7 @@ function getProcessThreeModule() {
 
 function bindMotionLayer(active) {
   bindSpotlight('.service-vcard, .project-card, .contact-card, .related-card');
-  bindTilt('.pc-media, .service-visual, .detail-hero-thumb');
+  bindTilt('.pc-media, .service-visual, .detail-hero-thumb, .device-frame');
   bindScrollPreview('.pc-photo');
   bindImageSkeletons('.pc-photo, .detail-hero-thumb.has-image');
   bindMagnet('.btn-primary');
