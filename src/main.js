@@ -355,7 +355,7 @@ function sendDemo(e) {
   const original = label.textContent;
   btn.dataset.busy = '1';
   btn.classList.add('btn-pulse');
-  label.textContent = 'Opening your email app…';
+  label.textContent = 'Sending…';
 
   const name = document.getElementById('cf-name')?.value.trim() || '';
   const email = document.getElementById('cf-email')?.value.trim() || '';
@@ -363,21 +363,24 @@ function sendDemo(e) {
   const company = document.getElementById('cf-company')?.value.trim() || '';
   const msg = document.getElementById('cf-msg')?.value.trim() || '';
 
-  const subject = `New project inquiry from ${name || 'website visitor'}`;
-  const body = [
-    `Name: ${name}`,
-    `Email: ${email}`,
-    phone ? `Phone: ${phone}` : null,
-    company ? `Company: ${company}` : null,
-    '',
-    'Project details:',
-    msg
-  ].filter(line => line !== null).join('\n');
-  const mailto = `mailto:contact@qyroxis.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const formData = new FormData();
+  formData.append('access_key', 'c06edbd5-f335-4bd8-8351-7d22f2da8a17');
+  formData.append('subject', 'New project inquiry from qyroxis.com');
+  formData.append('name', name);
+  formData.append('email', email);
+  formData.append('phone', phone);
+  formData.append('company', company);
+  formData.append('message', msg);
 
-  window.location.href = mailto;
-  e.target.reset();
-  setTimeout(() => { label.textContent = original; btn.classList.remove('btn-pulse'); delete btn.dataset.busy; }, 2400);
+  fetch('https://api.web3forms.com/submit', { method: 'POST', body: formData })
+    .then(r => {
+      label.textContent = r.ok ? "Sent, we'll be in touch" : 'Could not send, email us directly';
+      if (r.ok) e.target.reset();
+    })
+    .catch(() => { label.textContent = 'Could not send, email us directly'; })
+    .finally(() => {
+      setTimeout(() => { label.textContent = original; btn.classList.remove('btn-pulse'); delete btn.dataset.busy; }, 2600);
+    });
 }
 
 function pageHeaderHTML(eyebrowText, titleText, sub, decryptWord) {
