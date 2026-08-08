@@ -1109,7 +1109,7 @@ function bindStorySlide() {
     start: 'top 85%',
     once: true,
     onEnter: batch => gsap.to(batch, {
-      opacity: 1, x: 0, duration: 0.8, ease: 'power3.out', stagger: 0.12, overwrite: true,
+      opacity: 1, x: 0, scale: 1, duration: 0.85, ease: 'power3.out', stagger: 0.12, overwrite: true,
       onComplete: () => batch.forEach(el => { el.classList.remove('story-slide', 'from-left', 'from-right'); gsap.set(el, { clearProps: 'transform' }); })
     })
   });
@@ -1176,7 +1176,7 @@ function bindEntranceAnimations(active) {
   mm.add('(prefers-reduced-motion: reduce)', () => {
     gsap.set('.fade-in, .reveal', { opacity: 1, y: 0, filter: 'none' });
     gsap.set('.card-settle', { opacity: 1, y: 0, scale: 1, rotate: 0 });
-    gsap.set('.story-slide', { opacity: 1, x: 0 });
+    gsap.set('.story-slide', { opacity: 1, x: 0, scale: 1 });
     gsap.set('.flow-diagram .flow-node', { scale: 1, opacity: 1 });
     gsap.set('.flow-diagram .flow-connector', { scaleX: 1 });
     document.querySelectorAll('.stat-num[data-final]').forEach(el => el.textContent = el.getAttribute('data-final'));
