@@ -34,9 +34,9 @@ const PROJECTS = [
     title: "Rasoi by TSN", category: "E-Commerce & Management",
     description: "A comprehensive web platform, mobile app, and digital presence: live payments, order management, and multi-location support. Built end to end.",
     fullDescription: "Rasoi by TSN (rasoibytsn.com) is a comprehensive digital ecosystem featuring a web platform and a dedicated mobile application, developed for a forward-thinking restaurant client. It seamlessly integrates customer-facing features with powerful backend operational tools to elevate both the dining experience and business management.",
-    challenge: "The restaurant was struggling with fragmented, legacy systems for reservations, customer feedback, and payment processing. Standard payment gateway fees were eroding profit margins on digital orders. They required a unified platform capable of handling table management, showcasing dynamic reviews, and offering a highly cost-effective payment alternative across multiple digital touchpoints.",
-    solution: "We engineered a robust cross-platform ecosystem, including a responsive Next.js and Reactjs web application and a dedicated native mobile application, all powered by a highly scalable Node.js and Supabase (PostgreSQL) backend. We built a custom, real-time reservation management dashboard for the staff. Most notably, we designed and implemented a secure, custom manual UPI payment architecture that directly integrates with the checkout flow, intelligently bypassing traditional third-party payment gateway transaction fees.",
-    impact: "By eliminating third-party payment gateway fees through our custom UPI architecture, the restaurant saw an immediate 3% increase in net profit margins on digital orders. The integrated reservation and review system drastically improved table turnover rates and boosted online customer engagement.",
+    challenge: "Legacy tools for reservations, reviews, and payments were fragmented, and standard gateway fees were quietly eating into every digital order's margin.",
+    solution: "We built a Next.js web app and a native mobile app on a Node.js and Supabase backend, with a real-time staff reservation dashboard and a custom UPI checkout that bypasses third-party gateway fees entirely.",
+    impact: "Cutting gateway fees lifted net margins by 3% on digital orders, and the new reservation and review flow turned tables faster and kept customers coming back.",
     stats: [["3%", "net margin increase"]],
     tags: ["Node.js", "Reactjs", "Supabase", "PostgreSQL", "Next.js", "JavaScript"],
     quote: "Cutting out gateway fees put 3% straight back into our margins, and table turnover has never been smoother.",
@@ -200,27 +200,40 @@ function flowDiagramHTML(icons) {
   ).join('')}</div>`;
 }
 
-// device-framed showcase gallery on a project's detail page: a mix of "laptop"
-// and "phone" mockups (stills or an autoplaying muted video) instead of one flat screenshot.
-function deviceGalleryHTML(p) {
-  if (!p.screens || !p.screens.length) return '';
+// a single device-framed mockup: "laptop" or "phone" chrome around a still image
+// or an autoplaying muted video, instead of a flat screenshot.
+function galleryItemHTML(s, domain) {
+  return `<div class="gallery-item gi-${s.type} card-settle">
+    <div class="device-frame ${s.type}">
+      ${s.type === 'laptop'
+      ? `<div class="device-bar"><span class="db-dot"></span><span class="db-dot"></span><span class="db-dot"></span><span class="device-url">${domain || ''}</span></div>`
+      : `<span class="device-notch"></span>`}
+      <div class="device-screen">${s.kind === 'video'
+      ? `<video autoplay muted loop playsinline poster="${s.poster}"><source src="${s.src}" type="video/mp4" /></video>`
+      : `<img src="${s.src}" alt="${s.caption || ''}" loading="lazy" />`}</div>
+    </div>
+    ${s.caption ? `<p class="gallery-cap">${s.caption}</p>` : ''}
+  </div>`;
+}
+
+// a narrative beat: an eyebrow + short paragraph beside a small cluster of device
+// mockups, alternating sides down the page instead of dumping every screenshot in
+// one block up top. mediaSide picks which side the media sits on at desktop widths.
+function storyRowHTML({ eyebrow, text, screens, domain, mediaSide }) {
+  const copy = `<div class="story-text${screens && screens.length ? ` story-slide from-${mediaSide === 'left' ? 'right' : 'left'}` : ' reveal'}">
+    <span class="eyebrow">${eyebrow}</span>
+    <p>${text}</p>
+  </div>`;
+  if (!screens || !screens.length) {
+    return `<div class="wrap"><div class="story-row no-media">${copy}</div></div>`;
+  }
+  const media = `<div class="story-media${screens.length > 1 ? ' cluster' : ''} story-slide from-${mediaSide}">
+    ${screens.map(s => galleryItemHTML(s, domain)).join('')}
+  </div>`;
   return `<div class="wrap">
-    <section class="detail-gallery">
-      <div class="gallery-grid">
-        ${p.screens.map((s, i) => `
-          <div class="gallery-item gi-${s.type}${i === 0 ? ' gi-feature' : ''} reveal">
-            <div class="device-frame ${s.type}">
-              ${s.type === 'laptop'
-              ? `<div class="device-bar"><span class="db-dot"></span><span class="db-dot"></span><span class="db-dot"></span><span class="device-url">${p.domain || ''}</span></div>`
-              : `<span class="device-notch"></span>`}
-              <div class="device-screen">${s.kind === 'video'
-              ? `<video autoplay muted loop playsinline poster="${s.poster}"><source src="${s.src}" type="video/mp4" /></video>`
-              : `<img src="${s.src}" alt="${s.caption || ''}" loading="lazy" />`}</div>
-            </div>
-            ${s.caption ? `<p class="gallery-cap">${s.caption}</p>` : ''}
-          </div>`).join('')}
-      </div>
-    </section>
+    <div class="story-row">
+      ${mediaSide === 'left' ? media + copy : copy + media}
+    </div>
   </div>`;
 }
 
@@ -584,8 +597,6 @@ function pageDetail(id) {
       : `<span class="visit-btn" style="opacity:0.5; cursor:default;">Live site [placeholder]</span>`}
     </div>
   </div>
-  ${deviceGalleryHTML(p)}
-
   <section class="detail-stats-band">
     <div class="wrap stat-grid-3">
       ${p.stats.map(([n, c]) => `<div class="reveal">${statNum(n)}<div class="stat-cap">${c}</div></div>`).join('')}
@@ -593,18 +604,17 @@ function pageDetail(id) {
   </section>
 
   <div class="wrap">
-    <div class="detail-grid">
-      <div class="detail-main" id="detailNarrative">
-        <div class="detail-rail" aria-hidden="true"><div class="detail-rail-fill" id="detailRailFill"></div></div>
-        <section class="reveal"><span class="eyebrow">The challenge</span><p>${p.challenge}</p></section>
-        <section class="reveal"><span class="eyebrow">Our solution</span><p>${p.solution}</p></section>
-        <section class="reveal"><span class="eyebrow">The impact</span><p>${p.impact}</p></section>
-      </div>
-      <div class="detail-side">
-        <div class="side-box reveal"><h4>Technologies</h4>${tagRowFull(p.tags)}</div>
-      </div>
-    </div>
+    <p class="story-lead reveal"><span class="eyebrow">The challenge</span>${p.challenge}</p>
   </div>
+
+  ${storyRowHTML({
+    eyebrow: "Our solution", text: p.solution, domain: p.domain, mediaSide: "left",
+    screens: (p.screens || []).slice(0, 2)
+  })}
+  ${storyRowHTML({
+    eyebrow: "The impact", text: p.impact, domain: p.domain, mediaSide: "right",
+    screens: (p.screens || []).slice(2)
+  })}
 
   <section class="detail-quote-band">
     <div class="wrap">
@@ -1092,6 +1102,19 @@ function bindCardSettle() {
   });
 }
 
+// case-study story rows: text and its paired media cluster slide in from opposite
+// sides and meet in the middle, instead of just fading up like the rest of the page.
+function bindStorySlide() {
+  ScrollTrigger.batch('.story-slide', {
+    start: 'top 85%',
+    once: true,
+    onEnter: batch => gsap.to(batch, {
+      opacity: 1, x: 0, duration: 0.8, ease: 'power3.out', stagger: 0.12, overwrite: true,
+      onComplete: () => batch.forEach(el => { el.classList.remove('story-slide', 'from-left', 'from-right'); gsap.set(el, { clearProps: 'transform' }); })
+    })
+  });
+}
+
 function bindSplitTextReveal(selector) {
   gsap.utils.toArray(selector).forEach(el => {
     const split = new SplitText(el, { type: 'words', wordsClass: 'word' });
@@ -1143,6 +1166,7 @@ function bindEntranceAnimations(active) {
     bindFadeIn();
     bindReveal();
     bindCardSettle();
+    bindStorySlide();
     bindFlowDraw('.flow-diagram');
     bindSplitTextReveal('.split-text, #testiQuote');
     bindStatCounts();
@@ -1152,11 +1176,12 @@ function bindEntranceAnimations(active) {
   mm.add('(prefers-reduced-motion: reduce)', () => {
     gsap.set('.fade-in, .reveal', { opacity: 1, y: 0, filter: 'none' });
     gsap.set('.card-settle', { opacity: 1, y: 0, scale: 1, rotate: 0 });
+    gsap.set('.story-slide', { opacity: 1, x: 0 });
     gsap.set('.flow-diagram .flow-node', { scale: 1, opacity: 1 });
     gsap.set('.flow-diagram .flow-connector', { scaleX: 1 });
     document.querySelectorAll('.stat-num[data-final]').forEach(el => el.textContent = el.getAttribute('data-final'));
     document.querySelectorAll('#heroTitle .word').forEach(w => gsap.set(w, { opacity: 1, y: 0, filter: 'none' }));
-    ['timelineFill', 'processFlowFill', 'detailRailFill'].forEach(id => { const f = document.getElementById(id); if (f) f.style.height = '100%'; });
+    ['timelineFill', 'processFlowFill'].forEach(id => { const f = document.getElementById(id); if (f) f.style.height = '100%'; });
   });
 }
 
@@ -1440,7 +1465,7 @@ function bindStatCounts() {
 }
 
 function bindScrollFills() {
-  [['aboutTimeline', 'timelineFill'], ['processFlow', 'processFlowFill'], ['detailNarrative', 'detailRailFill']].forEach(([trackId, fillId]) => {
+  [['aboutTimeline', 'timelineFill'], ['processFlow', 'processFlowFill']].forEach(([trackId, fillId]) => {
     const track = document.getElementById(trackId), fill = document.getElementById(fillId);
     if (!track || !fill) return;
     gsap.set(fill, { height: '0%' });
