@@ -2341,18 +2341,20 @@ section.block {
 }
 
 .story-row {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: clamp(28px, 5vw, 40px);
-  padding: clamp(40px, 7vw, 72px) 0;
+  padding: clamp(48px, 8vw, 88px) 0;
   border-top: 1px solid var(--border);
+  overflow: hidden;
 }
 
 @media (min-width: 900px) {
   .story-row {
     flex-direction: row;
     align-items: center;
-    gap: clamp(40px, 6vw, 72px);
+    gap: 0;
   }
 
   .story-row.no-media .story-text {
@@ -2360,7 +2362,33 @@ section.block {
   }
 }
 
+/* giant outlined chapter number, watermarked behind the row (Beat: creative-agency numeral) */
+.story-num {
+  position: absolute;
+  top: clamp(-12px, -2vw, 4px);
+  z-index: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(6rem, 14vw, 11rem);
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--border-strong);
+  opacity: 0.6;
+  pointer-events: none;
+  user-select: none;
+}
+
+.story-row.media-left .story-num {
+  left: 0;
+}
+
+.story-row.media-right .story-num {
+  right: 0;
+}
+
 .story-text {
+  position: relative;
+  z-index: 1;
   flex: 1 1 46%;
   min-width: 0;
 }
@@ -2378,32 +2406,83 @@ section.block {
   max-width: 52ch;
 }
 
+/* thin animated thread linking copy to media, echoing the hero's flow-connector dot */
+.story-thread {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .story-thread {
+    position: relative;
+    flex: 0 0 clamp(48px, 6vw, 96px);
+    height: 1px;
+    background: var(--border-strong);
+    align-self: center;
+  }
+
+  .story-thread::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 6px;
+    height: 6px;
+    margin-top: -3px;
+    border-radius: 50%;
+    background: var(--accent-strong);
+    animation: flowMove 2.4s linear infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story-thread::after { animation: none; left: 50%; opacity: 1; }
+}
+
 .story-media {
   position: relative;
+  z-index: 1;
   flex: 1 1 54%;
   min-width: 0;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: clamp(24px, 3vw, 36px);
-  padding: clamp(32px, 5vw, 56px);
-  border-radius: var(--radius-hero);
-  border: 1px solid var(--border);
-  background:
-    radial-gradient(120% 150% at 12% 0%, color-mix(in srgb, var(--accent) 32%, transparent) 0%, transparent 58%),
-    radial-gradient(100% 130% at 100% 100%, color-mix(in srgb, var(--accent-strong) 24%, transparent) 0%, transparent 62%),
-    var(--bg-card);
-  box-shadow: var(--shadow);
+  gap: clamp(8px, 1.5vw, 16px);
 }
 
 .story-media .gallery-item {
   flex: 1 1 240px;
-  max-width: 400px;
+  max-width: 380px;
 }
 
 .story-media:not(.cluster) .gallery-item {
-  max-width: 460px;
+  max-width: 440px;
+}
+
+/* candid, slightly-tossed stagger instead of a rigid grid: alternating tilt + lift */
+.story-media .gallery-item:nth-child(odd) .device-frame {
+  --rest-rotate: -3deg;
+}
+
+.story-media .gallery-item:nth-child(even) .device-frame {
+  --rest-rotate: 3deg;
+}
+
+.story-media .gallery-item:nth-child(2) {
+  margin-top: clamp(20px, 4vw, 40px);
+}
+
+.story-media .gallery-item:nth-child(3) {
+  margin-top: clamp(-16px, -2vw, -8px);
+}
+
+.story-media .gallery-item:hover {
+  z-index: 5;
+}
+
+.story-media .gallery-item:hover .device-frame {
+  --rest-rotate: 0deg;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.22);
 }
 
 .story-slide {
@@ -2411,11 +2490,11 @@ section.block {
 }
 
 .story-slide.from-left {
-  transform: translateX(-64px) scale(0.96);
+  transform: translateX(-64px);
 }
 
 .story-slide.from-right {
-  transform: translateX(64px) scale(0.96);
+  transform: translateX(64px);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2423,6 +2502,7 @@ section.block {
 }
 
 .gallery-item {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -2435,8 +2515,8 @@ section.block {
   background: var(--bg-deep);
   overflow: hidden;
   box-shadow: var(--shadow);
-  transform: perspective(900px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
-  transition: transform 0.4s var(--ease-out-soft);
+  transform: perspective(900px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) rotate(var(--rest-rotate, 0deg));
+  transition: transform 0.4s var(--ease-out-soft), box-shadow 0.4s ease;
 }
 
 .device-frame.phone {

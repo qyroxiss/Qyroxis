@@ -219,20 +219,25 @@ function galleryItemHTML(s, domain) {
 // a narrative beat: an eyebrow + short paragraph beside a small cluster of device
 // mockups, alternating sides down the page instead of dumping every screenshot in
 // one block up top. mediaSide picks which side the media sits on at desktop widths.
-function storyRowHTML({ eyebrow, text, screens, domain, mediaSide }) {
+// num renders as a giant outlined watermark, echoing the "01/02" chapter numbering
+// already used on the services page.
+function storyRowHTML({ num, eyebrow, text, screens, domain, mediaSide }) {
   const copy = `<div class="story-text${screens && screens.length ? ` story-slide from-${mediaSide === 'left' ? 'right' : 'left'}` : ' reveal'}">
     <span class="eyebrow">${eyebrow}</span>
     <p>${text}</p>
   </div>`;
+  const numHTML = `<span class="story-num" aria-hidden="true">0${num}</span>`;
   if (!screens || !screens.length) {
-    return `<div class="wrap"><div class="story-row no-media">${copy}</div></div>`;
+    return `<div class="wrap"><div class="story-row no-media media-${mediaSide}">${numHTML}${copy}</div></div>`;
   }
   const media = `<div class="story-media${screens.length > 1 ? ' cluster' : ''} story-slide from-${mediaSide}">
     ${screens.map(s => galleryItemHTML(s, domain)).join('')}
   </div>`;
+  const thread = `<span class="story-thread" aria-hidden="true"></span>`;
   return `<div class="wrap">
-    <div class="story-row">
-      ${mediaSide === 'left' ? media + copy : copy + media}
+    <div class="story-row media-${mediaSide}">
+      ${numHTML}
+      ${mediaSide === 'left' ? media + thread + copy : copy + thread + media}
     </div>
   </div>`;
 }
@@ -608,11 +613,11 @@ function pageDetail(id) {
   </div>
 
   ${storyRowHTML({
-    eyebrow: "Our solution", text: p.solution, domain: p.domain, mediaSide: "left",
+    num: 1, eyebrow: "Our solution", text: p.solution, domain: p.domain, mediaSide: "left",
     screens: (p.screens || []).slice(0, 2)
   })}
   ${storyRowHTML({
-    eyebrow: "The impact", text: p.impact, domain: p.domain, mediaSide: "right",
+    num: 2, eyebrow: "The impact", text: p.impact, domain: p.domain, mediaSide: "right",
     screens: (p.screens || []).slice(2)
   })}
 
