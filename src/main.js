@@ -27,6 +27,9 @@ import pulseShotHomeDesktop from './assets/img/projects/pulse/desktop-home.png';
 import pulseShotLoginMobile from './assets/img/projects/pulse/mobile-login.png';
 import pulseShotPlansDesktop from './assets/img/projects/pulse/desktop-plans.jpg';
 import pulseShotHomeMobile from './assets/img/projects/pulse/mobile-home.png';
+import pulseShotAdminOverview from './assets/img/projects/pulse/admin-overview.png';
+import pulseShotAdminLedger from './assets/img/projects/pulse/admin-ledger.png';
+import pulseShotAdminReports from './assets/img/projects/pulse/admin-reports.png';
 import charmShotHomeDesktop from './assets/img/projects/charm-avenue/desktop-home.jpg';
 import charmShotProductMobile from './assets/img/projects/charm-avenue/mobile-product.jpg';
 import charmShotShopDesktop from './assets/img/projects/charm-avenue/desktop-shop.jpg';
@@ -123,7 +126,10 @@ const PROJECTS = [
       { type: "laptop", kind: "image", src: pulseShotHomeDesktop, caption: "One pass, every workout" },
       { type: "phone", kind: "image", src: pulseShotLoginMobile, caption: "Member sign-in" },
       { type: "laptop", kind: "image", src: pulseShotPlansDesktop, caption: "Flexible membership plans" },
-      { type: "phone", kind: "image", src: pulseShotHomeMobile, caption: "Book classes from your phone" }
+      { type: "phone", kind: "image", src: pulseShotHomeMobile, caption: "Book classes from your phone" },
+      { type: "laptop", kind: "image", src: pulseShotAdminOverview, caption: "Owner's dashboard, dark mode" },
+      { type: "laptop", kind: "image", src: pulseShotAdminLedger, caption: "Every member's ledger, searchable" },
+      { type: "laptop", kind: "image", src: pulseShotAdminReports, caption: "One-click reports and CSV exports" }
     ]
   },
   {
