@@ -26,7 +26,6 @@ import gardenrichShotHomeMobile from './assets/img/projects/gardenrich/mobile-ho
 import pulseShotHomeDesktop from './assets/img/projects/pulse/desktop-home.png';
 import pulseShotLoginMobile from './assets/img/projects/pulse/mobile-login.png';
 import pulseShotPlansDesktop from './assets/img/projects/pulse/desktop-plans.jpg';
-import pulseShotHomeMobile from './assets/img/projects/pulse/mobile-home.png';
 import pulseShotAdminOverview from './assets/img/projects/pulse/admin-overview.png';
 import pulseShotAdminLedger from './assets/img/projects/pulse/admin-ledger.png';
 import pulseShotAdminReports from './assets/img/projects/pulse/admin-reports.png';
@@ -130,11 +129,11 @@ const PROJECTS = [
     tags: ["Flutter", "Dart", "Supabase", "PostgreSQL", "Edge Functions", "Vercel"],
     quote: "200+ members, zero paper, sub-second check-ins. I run the whole gym from one dashboard now.",
     quoteRole: "Owner, Vishal Fitness",
+    mediaSplit: 3,
     screens: [
       { type: "laptop", kind: "image", src: pulseShotHomeDesktop, caption: "One pass, every workout" },
       { type: "phone", kind: "image", src: pulseShotLoginMobile, caption: "Member sign-in" },
       { type: "laptop", kind: "image", src: pulseShotPlansDesktop, caption: "Flexible membership plans" },
-      { type: "phone", kind: "image", src: pulseShotHomeMobile, caption: "Book classes from your phone" },
       { type: "laptop", kind: "image", src: pulseShotAdminOverview, caption: "Owner's dashboard, dark mode" },
       { type: "laptop", kind: "image", src: pulseShotAdminLedger, caption: "Every member's ledger, searchable" },
       { type: "laptop", kind: "image", src: pulseShotAdminReports, caption: "One-click reports and CSV exports" }
@@ -672,11 +671,11 @@ function pageDetail(id) {
 
   ${storyRowHTML({
     num: 1, eyebrow: "Our solution", text: p.solution, points: p.solutionPoints, domain: p.domain, mediaSide: "left",
-    screens: (p.screens || []).slice(0, 2)
+    screens: (p.screens || []).slice(0, p.mediaSplit || 2)
   })}
   ${storyRowHTML({
     num: 2, eyebrow: "The impact", text: p.impact, points: p.impactPoints, domain: p.domain, mediaSide: "right",
-    screens: (p.screens || []).slice(2)
+    screens: (p.screens || []).slice(p.mediaSplit || 2)
   })}
 
   <section class="detail-quote-band">
