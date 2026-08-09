@@ -16,6 +16,21 @@ import rasoiShotManageMenuDesktop from './assets/img/projects/rasoi/desktop-mana
 import rasoiShotAdminOverview from './assets/img/projects/rasoi/mobile-admin-overview.png';
 import rasoiOrderVideo from './assets/img/projects/rasoi/order-menu.mp4';
 import rasoiOrderPoster from './assets/img/projects/rasoi/order-menu-poster.jpg';
+import rajfilmsShotGalleryDesktop from './assets/img/projects/rajfilms/desktop-gallery.jpg';
+import rajfilmsShotCoursesMobile from './assets/img/projects/rajfilms/mobile-courses.png';
+import rajfilmsShotCoursesDesktop from './assets/img/projects/rajfilms/desktop-courses.png';
+import rajfilmsShotGalleryMobile from './assets/img/projects/rajfilms/mobile-gallery.jpg';
+import gardenrichShotHomeDesktop from './assets/img/projects/gardenrich/desktop-home.jpg';
+import gardenrichShotLoginMobile from './assets/img/projects/gardenrich/mobile-login.png';
+import gardenrichShotHomeMobile from './assets/img/projects/gardenrich/mobile-home.jpg';
+import pulseShotHomeDesktop from './assets/img/projects/pulse/desktop-home.png';
+import pulseShotLoginMobile from './assets/img/projects/pulse/mobile-login.png';
+import pulseShotPlansDesktop from './assets/img/projects/pulse/desktop-plans.jpg';
+import pulseShotHomeMobile from './assets/img/projects/pulse/mobile-home.png';
+import charmShotHomeDesktop from './assets/img/projects/charm-avenue/desktop-home.jpg';
+import charmShotProductMobile from './assets/img/projects/charm-avenue/mobile-product.jpg';
+import charmShotShopDesktop from './assets/img/projects/charm-avenue/desktop-shop.jpg';
+import charmShotShopMobile from './assets/img/projects/charm-avenue/mobile-shop.jpg';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
@@ -56,13 +71,19 @@ const PROJECTS = [
     title: "Raj Films Studio", category: "Custom Client Project",
     description: "A full-stack custom platform engineered around the client's operational workflow. Designed for scale from day one.",
     fullDescription: "Raj Films Studio is a bespoke digital experience crafted for a premier client in the creative industry. This project reflects the perfect synthesis of striking visual aesthetics and robust underlying web technology.",
-    challenge: "As a premier creative studio, the client's primary requirement was a digital presence that mirrored the high production value of their cinematic projects. The application needed to serve heavy multimedia assets such as high-definition video reels and high-res imagery instantaneously, without stuttering or compromising the immersive visual experience.",
-    solution: "We engineered a highly optimized frontend utilizing Reactjs and TypeScript to ensure rigorous type safety and long-term maintainability. A robust Node.js backend handles dynamic content delivery and asset management. We implemented advanced asset optimization techniques, lazy loading, and a custom animation framework to create a fluid, cinematic browsing experience that performs flawlessly across both desktop and mobile environments.",
-    impact: "The newly deployed digital platform increased average user session duration by 150%. The immersive experience significantly elevated the studio's digital brand perception, directly contributing to a measurable increase in high-tier commercial client inquiries.",
+    challenge: "The client needed a digital presence that matched the production value of their cinematic work: serving high-res video and imagery instantly, with zero stutter.",
+    solution: "We built a Reactjs and TypeScript frontend on a Node.js backend, using lazy loading and a custom animation framework for a fluid, cinematic browsing experience on any device.",
+    impact: "Average session duration is up 150%, and the elevated brand perception has translated into a measurable rise in high-tier commercial inquiries.",
     stats: [["150%", "longer session duration"]],
     tags: ["Node.js", "Reactjs", "JavaScript", "TypeScript"],
     quote: "Session times are up 150%    visitors finally experience our work the way it deserves to be seen.",
-    quoteRole: "Studio Director, Raj Films Studio"
+    quoteRole: "Studio Director, Raj Films Studio",
+    screens: [
+      { type: "laptop", kind: "image", src: rajfilmsShotGalleryDesktop, caption: "Student performance gallery" },
+      { type: "phone", kind: "image", src: rajfilmsShotCoursesMobile, caption: "Course enrollment, on mobile" },
+      { type: "laptop", kind: "image", src: rajfilmsShotCoursesDesktop, caption: "Structured course programs" },
+      { type: "phone", kind: "image", src: rajfilmsShotGalleryMobile, caption: "Cinematic gallery, anywhere" }
+    ]
   },
   {
     id: "gardenrich", icon: "i-shield", domain: "gardenrich.online", thumb: thumbGardenrich, year: "2026",
@@ -71,13 +92,18 @@ const PROJECTS = [
     title: "GardenRich Project", category: "Web & Mobile Platform",
     description: "A deployed web platform and mobile application (gardenrich.online) featuring secure user authentication and reliable OTP delivery systems.",
     fullDescription: "GardenRich (gardenrich.online) is a fully deployed, high-performance web platform and native mobile application tailored for the modern digital consumer. It offers a seamless, intuitive interface backed by enterprise-grade security and reliable authentication mechanisms.",
-    challenge: "The client required a highly scalable platform capable of handling unpredictable traffic spikes while ensuring absolute data privacy for its users. A critical technical pain point was the need for a frictionless, highly reliable OTP delivery system that could operate globally without latency drops or delivery failures across both web and mobile channels.",
-    solution: "We architected a cross-platform solution utilizing Flutter and Dart to guarantee a consistent UI/UX across all touchpoints, delivering both the web platform and the native mobile application. The backend leverages the power of Node.js and Reactjs, deeply integrated with Supabase and PostgreSQL for real-time database management and secure, low-latency authentication. We designed custom OTP routing logic to ensure near-instantaneous delivery rates regardless of the user's geographic location.",
-    impact: "The platform achieved 99.99% uptime during its initial launch phase, scaling effortlessly. User onboarding times were reduced by 60% due to the optimized, secure authentication flow. GardenRich now supports a rapidly growing, engaged user base with zero compromises on operational security.",
+    challenge: "The platform needed to handle unpredictable traffic spikes while keeping a frictionless, globally reliable OTP login flow across both web and mobile.",
+    solution: "We built a Flutter and Dart cross-platform app on a Node.js and Supabase backend, with custom OTP routing tuned for near-instant delivery anywhere in the world.",
+    impact: "99.99% uptime from launch, and onboarding times cut by 60%: GardenRich now scales to a growing user base with zero compromises on security.",
     stats: [["99.99%", "platform uptime"], ["60%", "faster onboarding"]],
     tags: ["Flutter", "Dart", "Supabase", "Node.js", "Reactjs", "PostgreSQL"],
     quote: "99.99% uptime from day one, and onboarding that's 60% faster. The platform just works, at scale.",
-    quoteRole: "Product Lead, GardenRich"
+    quoteRole: "Product Lead, GardenRich",
+    screens: [
+      { type: "laptop", kind: "image", src: gardenrichShotHomeDesktop, caption: "Fresh product catalog" },
+      { type: "phone", kind: "image", src: gardenrichShotLoginMobile, caption: "Secure OTP sign-in" },
+      { type: "phone", kind: "image", src: gardenrichShotHomeMobile, caption: "Shopping on the go" }
+    ]
   },
   {
     id: "pulse", icon: "i-dumbbell", domain: "vishal-fitness.vercel.app", thumb: thumbPulse, year: "2026",
@@ -86,13 +112,19 @@ const PROJECTS = [
     title: "Vishal Fitness Gym", category: "Gym Management Platform",
     description: "A complete gym management platform with mobile app, admin portal, digital QR passes, and real-time analytics. Built for Vishal Fitness to go 100% paperless.",
     fullDescription: "Pulse is a full-stack gym management platform built for Vishal Fitness, Unnao. The system replaces paper registers and WhatsApp-based operations with a mobile member app, a web admin portal, digital QR membership passes, payment tracking, workout logging, class scheduling, and live analytics.",
-    challenge: "Vishal Fitness was managing 200+ members using WhatsApp messages, handwritten registers, and manual fee reminders. The process was error-prone and impossible to scale. The gym needed a single platform that handled check-ins, payments, member records, and communication without requiring separate tools.",
-    solution: "We built a cross-platform Flutter application with a single codebase for web and mobile. The backend runs on Supabase (PostgreSQL) with Row Level Security so members only access their own data while admins have full operational control. We added digital QR passes for instant check-in, payment recording with discount support, expiry alerts, CSV export, and a Hevy-style workout tracker. Serverless Edge Functions handle member creation and automated email dispatch.",
-    impact: "200+ members went fully paperless from day one. Check-in time dropped to under 1 second. Revenue and attendance data is tracked in real-time. The gym owner now runs operations from a single dashboard instead of managing multiple apps and paper records.",
+    challenge: "200+ members were being managed through WhatsApp messages and handwritten registers, error-prone, and impossible to scale.",
+    solution: "A single Flutter codebase for web and mobile, on Supabase with Row Level Security, adding digital QR check-in, payment tracking, and a Hevy-style workout tracker.",
+    impact: "200+ members went fully paperless, check-in dropped to under a second, and the owner now runs the whole gym from one dashboard.",
     stats: [["200+", "members, zero paper"], ["<1s", "check-in time"]],
     tags: ["Flutter", "Dart", "Supabase", "PostgreSQL", "Edge Functions", "Vercel"],
     quote: "200+ members, zero paper, sub-second check-ins. I run the whole gym from one dashboard now.",
-    quoteRole: "Owner, Vishal Fitness"
+    quoteRole: "Owner, Vishal Fitness",
+    screens: [
+      { type: "laptop", kind: "image", src: pulseShotHomeDesktop, caption: "One pass, every workout" },
+      { type: "phone", kind: "image", src: pulseShotLoginMobile, caption: "Member sign-in" },
+      { type: "laptop", kind: "image", src: pulseShotPlansDesktop, caption: "Flexible membership plans" },
+      { type: "phone", kind: "image", src: pulseShotHomeMobile, caption: "Book classes from your phone" }
+    ]
   },
   {
     id: "charm-avenue", icon: "i-cart", domain: "www.charmavenue.in", thumb: thumbCharmAvenue, year: "2026",
@@ -101,13 +133,19 @@ const PROJECTS = [
     title: "Charm Avenue by Nandini", category: "D2C E-Commerce Platform",
     description: "A full storefront and admin platform for a growing accessories brand, with WhatsApp-first checkout instead of a payment gateway, built to move fast without transaction fees.",
     fullDescription: "Charm Avenue by Nandini is a direct-to-consumer accessories and gifting brand. We built its storefront and back office as a single system: product catalog, cart, and a WhatsApp-based checkout flow, backed by a full admin panel for running the business day to day.",
-    challenge: "As a small, fast-moving D2C brand, Charm Avenue needed an online storefront without the overhead of a full payment-gateway integration or a heavyweight e-commerce platform. The catalog also needed to keep changing: new products, seasonal combos, sales, without waiting on a developer for every update.",
-    solution: "We built a Next.js and TypeScript storefront on Supabase (Postgres, Auth, Storage), with product variants, stock tracking, and time-boxed sale windows. Checkout routes straight into WhatsApp instead of a payment gateway, matching how the brand's customers already prefer to order. A full admin panel, covering products, categories, combo discounts, homepage content, and order management with automatic PDF invoicing, lets the team run the entire storefront themselves.",
-    impact: "Charm Avenue is live in production, with the brand's team managing its own catalog, homepage, and orders end to end through the admin panel, with no payment gateway fees and no developer needed to publish a new drop or run a sale.",
+    challenge: "As a small, fast-moving D2C brand, Charm Avenue needed a storefront without payment-gateway overhead, and a catalog the team could update themselves, without a developer.",
+    solution: "A Next.js and TypeScript storefront on Supabase, with WhatsApp-based checkout instead of a payment gateway, plus a full admin panel for products, discounts, and orders.",
+    impact: "Charm Avenue runs its own catalog and sales end to end, live in production, with zero gateway fees and no developer needed to launch a drop.",
     stats: [["0%", "payment gateway fees, checkout runs through WhatsApp"]],
     tags: ["Next.js", "React", "TypeScript", "Supabase", "PostgreSQL", "Tailwind CSS"],
     quote: "We can launch a new collection or run a sale ourselves, same day, no waiting on anyone.",
-    quoteRole: "Founder, Charm Avenue by Nandini"
+    quoteRole: "Founder, Charm Avenue by Nandini",
+    screens: [
+      { type: "laptop", kind: "image", src: charmShotHomeDesktop, caption: "Storefront, styled for the brand" },
+      { type: "phone", kind: "image", src: charmShotProductMobile, caption: "Product page, mobile-first" },
+      { type: "laptop", kind: "image", src: charmShotShopDesktop, caption: "Full catalog, 90+ products" },
+      { type: "phone", kind: "image", src: charmShotShopMobile, caption: "Browse & shop on mobile" }
+    ]
   }
 ];
 
