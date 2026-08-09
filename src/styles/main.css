@@ -2406,6 +2406,14 @@ section.block {
   max-width: 52ch;
 }
 
+.story-points {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 22px;
+  max-width: 52ch;
+}
+
 /* thin animated thread linking copy to media, echoing the hero's flow-connector dot */
 .story-thread {
   display: none;

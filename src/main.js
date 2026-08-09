@@ -54,7 +54,9 @@ const PROJECTS = [
     fullDescription: "Rasoi by TSN (rasoibytsn.com) is a comprehensive digital ecosystem featuring a web platform and a dedicated mobile application, developed for a forward-thinking restaurant client. It seamlessly integrates customer-facing features with powerful backend operational tools to elevate both the dining experience and business management.",
     challenge: "Legacy tools for reservations, reviews, and payments were fragmented, and standard gateway fees were quietly eating into every digital order's margin.",
     solution: "We built a Next.js web app and a native mobile app on a Node.js and Supabase backend, with a real-time staff reservation dashboard and a custom UPI checkout that bypasses third-party gateway fees entirely.",
+    solutionPoints: ["Next.js web app + native mobile app, one backend", "Real-time staff dashboard for reservations", "Custom UPI checkout, no gateway middleman"],
     impact: "Cutting gateway fees lifted net margins by 3% on digital orders, and the new reservation and review flow turned tables faster and kept customers coming back.",
+    impactPoints: ["+3% net margin on every digital order", "Faster table turnover from live reservations", "Review flow keeps customers coming back"],
     stats: [["3%", "net margin increase"]],
     tags: ["Node.js", "Reactjs", "Supabase", "PostgreSQL", "Next.js", "JavaScript"],
     quote: "Cutting out gateway fees put 3% straight back into our margins, and table turnover has never been smoother.",
@@ -76,7 +78,9 @@ const PROJECTS = [
     fullDescription: "Raj Films Studio is a bespoke digital experience crafted for a premier client in the creative industry. This project reflects the perfect synthesis of striking visual aesthetics and robust underlying web technology.",
     challenge: "The client needed a digital presence that matched the production value of their cinematic work: serving high-res video and imagery instantly, with zero stutter.",
     solution: "We built a Reactjs and TypeScript frontend on a Node.js backend, using lazy loading and a custom animation framework for a fluid, cinematic browsing experience on any device.",
+    solutionPoints: ["React + TypeScript frontend, Node.js backend", "Lazy-loaded media for instant high-res playback", "Custom animation framework, cinematic feel"],
     impact: "Average session duration is up 150%, and the elevated brand perception has translated into a measurable rise in high-tier commercial inquiries.",
+    impactPoints: ["+150% average session duration", "Elevated brand perception", "More high-tier commercial inquiries"],
     stats: [["150%", "longer session duration"]],
     tags: ["Node.js", "Reactjs", "JavaScript", "TypeScript"],
     quote: "Session times are up 150%    visitors finally experience our work the way it deserves to be seen.",
@@ -97,7 +101,9 @@ const PROJECTS = [
     fullDescription: "GardenRich (gardenrich.online) is a fully deployed, high-performance web platform and native mobile application tailored for the modern digital consumer. It offers a seamless, intuitive interface backed by enterprise-grade security and reliable authentication mechanisms.",
     challenge: "The platform needed to handle unpredictable traffic spikes while keeping a frictionless, globally reliable OTP login flow across both web and mobile.",
     solution: "We built a Flutter and Dart cross-platform app on a Node.js and Supabase backend, with custom OTP routing tuned for near-instant delivery anywhere in the world.",
+    solutionPoints: ["Flutter + Dart, one codebase for web & mobile", "Node.js + Supabase backend", "Custom OTP routing tuned for instant delivery"],
     impact: "99.99% uptime from launch, and onboarding times cut by 60%: GardenRich now scales to a growing user base with zero compromises on security.",
+    impactPoints: ["99.99% uptime since launch", "60% faster onboarding", "Scales with zero security compromises"],
     stats: [["99.99%", "platform uptime"], ["60%", "faster onboarding"]],
     tags: ["Flutter", "Dart", "Supabase", "Node.js", "Reactjs", "PostgreSQL"],
     quote: "99.99% uptime from day one, and onboarding that's 60% faster. The platform just works, at scale.",
@@ -117,7 +123,9 @@ const PROJECTS = [
     fullDescription: "Pulse is a full-stack gym management platform built for Vishal Fitness, Unnao. The system replaces paper registers and WhatsApp-based operations with a mobile member app, a web admin portal, digital QR membership passes, payment tracking, workout logging, class scheduling, and live analytics.",
     challenge: "200+ members were being managed through WhatsApp messages and handwritten registers, error-prone, and impossible to scale.",
     solution: "A single Flutter codebase for web and mobile, on Supabase with Row Level Security, adding digital QR check-in, payment tracking, and a Hevy-style workout tracker.",
+    solutionPoints: ["Flutter codebase, web + mobile from one build", "Supabase with Row Level Security", "Digital QR check-in & Hevy-style workout log"],
     impact: "200+ members went fully paperless, check-in dropped to under a second, and the owner now runs the whole gym from one dashboard.",
+    impactPoints: ["200+ members, zero paper", "Check-in time under 1 second", "Owner runs the gym from one dashboard"],
     stats: [["200+", "members, zero paper"], ["<1s", "check-in time"]],
     tags: ["Flutter", "Dart", "Supabase", "PostgreSQL", "Edge Functions", "Vercel"],
     quote: "200+ members, zero paper, sub-second check-ins. I run the whole gym from one dashboard now.",
@@ -141,7 +149,9 @@ const PROJECTS = [
     fullDescription: "Charm Avenue by Nandini is a direct-to-consumer accessories and gifting brand. We built its storefront and back office as a single system: product catalog, cart, and a WhatsApp-based checkout flow, backed by a full admin panel for running the business day to day.",
     challenge: "As a small, fast-moving D2C brand, Charm Avenue needed a storefront without payment-gateway overhead, and a catalog the team could update themselves, without a developer.",
     solution: "A Next.js and TypeScript storefront on Supabase, with WhatsApp-based checkout instead of a payment gateway, plus a full admin panel for products, discounts, and orders.",
+    solutionPoints: ["Next.js + TypeScript storefront on Supabase", "WhatsApp checkout, no payment gateway", "Full admin panel for products & discounts"],
     impact: "Charm Avenue runs its own catalog and sales end to end, live in production, with zero gateway fees and no developer needed to launch a drop.",
+    impactPoints: ["Zero gateway fees on every sale", "Team updates the catalog, no developer needed", "Running live in production, day to day"],
     stats: [["0%", "payment gateway fees, checkout runs through WhatsApp"]],
     tags: ["Next.js", "React", "TypeScript", "Supabase", "PostgreSQL", "Tailwind CSS"],
     quote: "We can launch a new collection or run a sale ourselves, same day, no waiting on anyone.",
@@ -265,10 +275,14 @@ function galleryItemHTML(s, domain) {
 // one block up top. mediaSide picks which side the media sits on at desktop widths.
 // num renders as a giant outlined watermark, echoing the "01/02" chapter numbering
 // already used on the services page.
-function storyRowHTML({ num, eyebrow, text, screens, domain, mediaSide }) {
+function storyRowHTML({ num, eyebrow, text, points, screens, domain, mediaSide }) {
+  const pointsHTML = points && points.length
+    ? `<div class="story-points">${points.map(pt => `<div class="benefit-item">${icon('i-check')}<span>${pt}</span></div>`).join('')}</div>`
+    : '';
   const copy = `<div class="story-text${screens && screens.length ? ` story-slide from-${mediaSide === 'left' ? 'right' : 'left'}` : ' reveal'}">
     <span class="eyebrow">${eyebrow}</span>
     <p>${text}</p>
+    ${pointsHTML}
   </div>`;
   const numHTML = `<span class="story-num" aria-hidden="true">0${num}</span>`;
   if (!screens || !screens.length) {
@@ -657,11 +671,11 @@ function pageDetail(id) {
   </div>
 
   ${storyRowHTML({
-    num: 1, eyebrow: "Our solution", text: p.solution, domain: p.domain, mediaSide: "left",
+    num: 1, eyebrow: "Our solution", text: p.solution, points: p.solutionPoints, domain: p.domain, mediaSide: "left",
     screens: (p.screens || []).slice(0, 2)
   })}
   ${storyRowHTML({
-    num: 2, eyebrow: "The impact", text: p.impact, domain: p.domain, mediaSide: "right",
+    num: 2, eyebrow: "The impact", text: p.impact, points: p.impactPoints, domain: p.domain, mediaSide: "right",
     screens: (p.screens || []).slice(2)
   })}
 
