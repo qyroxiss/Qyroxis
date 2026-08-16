@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="./support.js"></script>
+</head>
+
+<body>
+  <x-dc>
+    <helmet>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+      <style>
+        :root {
+          --font-display: 'Space Grotesk', system-ui, sans-serif;
+          --font-body: 'Inter', system-ui, sans-serif;
+          --font-mono: 'Space Grotesk', system-ui, sans-serif;
+          --bg-deep: #F6F3EC;
+          --bg-card: #FFFDF8;
+          --bg-sunk: #EFEAE0;
+          --text-strong: #000000;
+          --text: #26262A;
+          --text-mute: #6B6B70;
+          --rule: rgba(0, 0, 0, .12);
+          --rule-soft: rgba(0, 0, 0, .07);
+          --accent: #004BBA;
+          --accent-strong: #0455D6;
+          --accent-wash: rgba(4, 85, 214, .08);
+          --radius-card: 24px;
+          --ease-out-soft: cubic-bezier(.24, .01, .36, 1);
+          --ease-in-out-soft: cubic-bezier(.72, 0, .36, 1);
+        }
+
+        :root[data-theme="dark"] {
+          --bg-deep: #1D1E20;
+          --bg-card: #26282B;
+          --bg-sunk: #171819;
+          --text-strong: #F5F3EE;
+          --text: #D8D6D1;
+          --text-mute: #9A9A9F;
+          --rule: rgba(255, 255, 255, .14);
+          --rule-soft: rgba(255, 255, 255, .08);
+          --accent: #3D7FE8;
+          --accent-strong: #3D7FE8;
+          --accent-wash: rgba(61, 127, 232, .12);
+        }
+
+        @media (prefers-color-scheme:dark) {
+          :root:not([data-theme="light"]) {
+            --bg-deep: #1D1E20;
+            --bg-card: #26282B;
+            --bg-sunk: #171819;
+            --text-strong: #F5F3EE;
+            --text: #D8D6D1;
+            --text-mute: #9A9A9F;
+            --rule: rgba(255, 255, 255, .14);
+            --rule-soft: rgba(255, 255, 255, .08);
+            --accent: #3D7FE8;
+            --accent-strong: #3D7FE8;
+            --accent-wash: rgba(61, 127, 232, .12);
+          }
+        }
+
+        * {
+          box-sizing: border-box
+        }
+
+        html {
+          scroll-behavior: smooth
+        }
+
+        body {
+          margin: 0;
+          background: var(--bg-deep);
+          color: var(--text);
+          font-family: var(--font-body);
+          -webkit-font-smoothing: antialiased
+        }
+
+        a {
+          color: var(--accent-strong);
+          text-decoration: none
+        }
+
+        a:hover {
+          color: var(--text-strong)
+        }
+
+        #q-rail::-webkit-scrollbar {
+          display: none
+        }
+
+        @media (prefers-reduced-motion:reduce) {
+          html {
+            scroll-behavior: auto
+          }
+        }
+      </style>
+    </helmet>
+    <div style="position:relative;background:var(--bg-deep);min-height:100vh;overflow-x:clip">
+
+      <div data-dots
+        style="position:fixed;inset:-10vh 0;pointer-events:none;z-index:0;opacity:.5;background-image:radial-gradient(var(--rule) 1px,transparent 1px);background-size:26px 26px">
+      </div>
+      <div data-dotglow
+        style="position:fixed;inset:-10vh 0;pointer-events:none;z-index:0;opacity:0;background-image:radial-gradient(var(--accent-strong) 1.4px,transparent 1.4px);background-size:26px 26px;-webkit-mask-image:radial-gradient(240px circle at 50% 50%,#000 0%,transparent 70%);mask-image:radial-gradient(240px circle at 50% 50%,#000 0%,transparent 70%)">
+      </div>
+      <canvas data-three aria-hidden="true"
+        style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0"></canvas>
+      <div data-progress
+        style="position:fixed;top:0;left:0;right:0;height:2px;z-index:60;transform-origin:left center;transform:scaleX(0);background:var(--accent-strong)">
+      </div>
+
+      <header
+        style="position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:16px clamp(16px,4vw,56px);backdrop-filter:blur(14px);background:color-mix(in srgb,var(--bg-deep) 82%,transparent);border-bottom:1px solid var(--rule-soft)">
+        <a href="#/"
+          style="font-family:var(--font-display);font-weight:700;font-size:19px;letter-spacing:-.02em;color:var(--text-strong)">Qyroxis</a>
+        <nav style="display:flex;align-items:center;gap:clamp(12px,2vw,28px);font-size:14px">
+          <a href="#/work" style="color:var(--text-mute)">Work</a>
+          <a href="#/services" style="color:var(--text-strong);font-weight:500">Services</a>
+          <a href="#/about" style="color:var(--text-mute)">About</a>
+          <button onClick="{{ toggleTheme }}" aria-label="Toggle colour theme"
+            style="display:inline-flex;align-items:center;gap:8px;border:1px solid var(--rule);background:transparent;color:var(--text);font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:8px 12px;border-radius:999px;cursor:pointer">{{
+            themeLabel }}</button>
+        </nav>
+      </header>
+
+      <nav id="q-rail" aria-label="Services"
+        style="position:sticky;top:66px;z-index:35;display:flex;align-items:center;gap:clamp(14px,2.4vw,32px);padding:11px clamp(20px,5vw,72px);overflow-x:auto;scrollbar-width:none;backdrop-filter:blur(14px);background:color-mix(in srgb,var(--bg-deep) 88%,transparent);border-bottom:1px solid var(--rule-soft)">
+        <span style="position:absolute;left:0;bottom:-1px;height:1px;width:100%;background:var(--rule-soft)"></span>
+        <span data-railprogress
+          style="position:absolute;left:0;bottom:-1px;height:1px;width:100%;background:var(--accent-strong);transform:scaleX(0);transform-origin:left center"></span>
+        <span
+          style="flex:none;font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-mute)">Pipeline</span>
+        <a href="#svc-1" data-rail="1"
+          style="flex:none;display:flex;align-items:center;gap:8px;color:var(--text-mute)"><span
+            style="position:relative;display:block;width:9px;height:9px;border-radius:50%;border:1px solid var(--rule);background:var(--bg-deep)"><span
+              data-railfill
+              style="position:absolute;inset:1.4px;border-radius:50%;background:var(--accent-strong);transform:scale(0);transform-origin:center"></span></span><span
+            data-raillabel
+            style="font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;white-space:nowrap">01 AI
+            Agents</span></a>
+        <a href="#svc-2" data-rail="2"
+          style="flex:none;display:flex;align-items:center;gap:8px;color:var(--text-mute)"><span
+            style="position:relative;display:block;width:9px;height:9px;border-radius:50%;border:1px solid var(--rule);background:var(--bg-deep)"><span
+              data-railfill
+              style="position:absolute;inset:1.4px;border-radius:50%;background:var(--accent-strong);transform:scale(0);transform-origin:center"></span></span><span
+            data-raillabel
+            style="font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;white-space:nowrap">02
+            Platforms</span></a>
+        <a href="#svc-3" data-rail="3"
+          style="flex:none;display:flex;align-items:center;gap:8px;color:var(--text-mute)"><span
+            style="position:relative;display:block;width:9px;height:9px;border-radius:50%;border:1px solid var(--rule);background:var(--bg-deep)"><span
+              data-railfill
+              style="position:absolute;inset:1.4px;border-radius:50%;background:var(--accent-strong);transform:scale(0);transform-origin:center"></span></span><span
+            data-raillabel
+            style="font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;white-space:nowrap">03
+            Commerce</span></a>
+        <a href="#svc-4" data-rail="4"
+          style="flex:none;display:flex;align-items:center;gap:8px;color:var(--text-mute)"><span
+            style="position:relative;display:block;width:9px;height:9px;border-radius:50%;border:1px solid var(--rule);background:var(--bg-deep)"><span
+              data-railfill
+              style="position:absolute;inset:1.4px;border-radius:50%;background:var(--accent-strong);transform:scale(0);transform-origin:center"></span></span><span
+            data-raillabel
+            style="font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;white-space:nowrap">04
+            Healthcare</span></a>
+        <a href="#svc-5" data-rail="5"
+          style="flex:none;display:flex;align-items:center;gap:8px;color:var(--text-mute)"><span
+            style="position:relative;display:block;width:9px;height:9px;border-radius:50%;border:1px solid var(--rule);background:var(--bg-deep)"><span
+              data-railfill
+              style="position:absolute;inset:1.4px;border-radius:50%;background:var(--accent-strong);transform:scale(0);transform-origin:center"></span></span><span
+            data-raillabel
+            style="font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;white-space:nowrap">05
+            Full-Stack</span></a>
+        <a href="#svc-cta" style="flex:none;display:flex;align-items:center;gap:8px;color:var(--text-mute)"><span
+            style="display:block;width:9px;height:9px;border:1px solid var(--rule);background:var(--bg-deep)"></span><span
+            style="font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;white-space:nowrap">Start</span></a>
+      </nav>
+
+      <section
+        style="position:relative;z-index:1;padding:clamp(56px,10vw,120px) clamp(20px,5vw,72px) clamp(40px,6vw,80px);max-width:1440px;margin:0 auto">
+        <div
+          style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(28px,5vw,72px);align-items:end">
+          <div>
+            <div data-eyebrow
+              style="display:flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-mute);margin-bottom:clamp(20px,3vw,32px)">
+              <span style="display:block;width:26px;height:1px;background:var(--accent-strong)"></span>Services
+            </div>
+            <h1 data-split
+              style="margin:0;font-family:var(--font-display);font-weight:700;font-size:clamp(40px,7.2vw,86px);line-height:.98;letter-spacing:-.035em;color:var(--text-strong);text-wrap:balance">
+              Five ways we ship working software.</h1>
+            <p data-fade
+              style="margin:clamp(20px,3vw,32px) 0 0;max-width:52ch;font-size:clamp(16px,1.3vw,19px);line-height:1.55;color:var(--text)">
+              No black boxes. Every engagement runs the same way: scope the real problem, build in the open, measure the
+              outcome. Below is what we build and what it has actually done.</p>
+            <div data-fade style="display:flex;flex-wrap:wrap;gap:12px;margin-top:clamp(24px,3vw,36px)">
+              <a href="#svc-cta" data-magnetic
+                style="display:inline-flex;align-items:center;gap:10px;background:var(--accent-strong);color:#fff;font-size:15px;font-weight:500;padding:14px 22px;border-radius:999px">Start
+                a project<span aria-hidden="true">→</span></a>
+              <a href="#svc-1"
+                style="display:inline-flex;align-items:center;gap:10px;border:1px solid var(--rule);color:var(--text-strong);font-size:15px;padding:14px 22px;border-radius:999px">See
+                the five</a>
+            </div>
+          </div>
+          <div data-manifest
+            style="border:1px solid var(--rule);border-radius:var(--radius-card);background:var(--bg-card);padding:clamp(18px,2.4vw,28px)">
+            <div
+              style="display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-mute);padding-bottom:14px;border-bottom:1px solid var(--rule-soft)">
+              <span>Service</span><span>Proof</span>
+            </div>
+            <a href="#svc-1" data-manifest-row
+              style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--rule-soft);color:var(--text-strong)"><span
+                style="font-family:var(--font-display);font-size:clamp(16px,1.5vw,19px);font-weight:500;letter-spacing:-.01em">01
+                &nbsp;AI &amp; Automation Agents</span><span data-num
+                style="font-family:var(--font-mono);font-size:13px;color:var(--text-mute)">400% faster</span></a>
+            <a href="#svc-2" data-manifest-row
+              style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--rule-soft);color:var(--text-strong)"><span
+                style="font-family:var(--font-display);font-size:clamp(16px,1.5vw,19px);font-weight:500;letter-spacing:-.01em">02
+                &nbsp;Web &amp; Mobile Platforms</span><span data-num
+                style="font-family:var(--font-mono);font-size:13px;color:var(--text-mute)">99.99% uptime</span></a>
+            <a href="#svc-3" data-manifest-row
+              style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--rule-soft);color:var(--text-strong)"><span
+                style="font-family:var(--font-display);font-size:clamp(16px,1.5vw,19px);font-weight:500;letter-spacing:-.01em">03
+                &nbsp;E-Commerce &amp; Payments</span><span data-num
+                style="font-family:var(--font-mono);font-size:13px;color:var(--text-mute)">+3% net margin</span></a>
+            <a href="#svc-4" data-manifest-row
+              style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--rule-soft);color:var(--text-strong)"><span
+                style="font-family:var(--font-display);font-size:clamp(16px,1.5vw,19px);font-weight:500;letter-spacing:-.01em">04
+                &nbsp;Healthcare &amp; Enterprise</span><span data-num
+                style="font-family:var(--font-mono);font-size:13px;color:var(--text-mute)">45% faster
+                retrieval</span></a>
+            <a href="#svc-5" data-manifest-row
+              style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:14px 0;color:var(--text-strong)"><span
+                style="font-family:var(--font-display);font-size:clamp(16px,1.5vw,19px);font-weight:500;letter-spacing:-.01em">05
+                &nbsp;Custom Full-Stack</span><span data-num
+                style="font-family:var(--font-mono);font-size:13px;color:var(--text-mute)">DB → deploy</span></a>
+          </div>
+        </div>
+      </section>
+
+      <section id="svc-1" data-svc="1"
+        style="position:relative;z-index:1;border-top:1px solid var(--rule);padding:clamp(64px,9vw,140px) clamp(20px,5vw,72px)">
+        <div
+          style="max-width:1440px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(32px,5vw,80px);align-items:start">
+          <div style="position:sticky;top:112px">
+            <div data-svc-index
+              style="font-family:var(--font-mono);font-size:clamp(48px,7vw,92px);line-height:1;font-weight:700;color:var(--accent-strong);opacity:.16;letter-spacing:-.04em">
+              01</div>
+            <div data-icon
+              style="margin:18px 0 20px;width:44px;height:44px;border:1px solid var(--rule);border-radius:12px;display:grid;place-items:center;background:var(--bg-card)">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent-strong)"
+                stroke-width="1.4">
+                <circle cx="12" cy="12" r="3"></circle>
+                <circle cx="4" cy="5" r="2"></circle>
+                <circle cx="20" cy="5" r="2"></circle>
+                <circle cx="4" cy="19" r="2"></circle>
+                <circle cx="20" cy="19" r="2"></circle>
+                <path d="M6 6.4 9.7 10M18 6.4 14.3 10M6 17.6 9.7 14M18 17.6 14.3 14"></path>
+              </svg>
+            </div>
+            <h2 data-split
+              style="margin:0;font-family:var(--font-display);font-weight:700;font-size:clamp(30px,3.6vw,46px);line-height:1.03;letter-spacing:-.03em;color:var(--text-strong)">
+              AI &amp; Automation Agents</h2>
+            <p data-fade style="margin:16px 0 0;max-width:38ch;font-size:17px;line-height:1.5;color:var(--text)">
+              Autonomous systems that take on the manual work: lead generation, data extraction, qualification.</p>
+            <a href="#/services/ai-automation-agents" data-fade
+              style="display:inline-flex;align-items:center;gap:8px;margin-top:22px;font-size:15px;font-weight:500;border-bottom:1px solid var(--accent-strong);padding-bottom:3px">Service
+              detail<span aria-hidden="true">→</span></a>
+          </div>
+          <div style="display:grid;gap:clamp(28px,3.5vw,44px)">
+            <p data-fade
+              style="margin:0;font-size:clamp(17px,1.4vw,20px);line-height:1.6;color:var(--text);max-width:58ch;text-wrap:pretty">
+              We build agents that run unattended against your real systems scraping and structuring sources, qualifying
+              inbound against your criteria, writing results back where your team already works. Every decision the
+              agent makes is logged and inspectable, so you can audit why a lead scored the way it did instead of
+              trusting a score.</p>
+
+            <div data-flow style="position:relative;display:grid;gap:22px;padding-left:30px">
+              <div data-flowline
+                style="position:absolute;left:9px;top:8px;bottom:8px;width:1px;background:var(--rule);transform-origin:top center">
+              </div>
+              <div data-step style="position:relative"><span
+                  style="position:absolute;left:-30px;top:3px;width:19px;height:19px;border-radius:50%;border:1px solid var(--rule);background:var(--bg-deep);display:grid;place-items:center;font-family:var(--font-mono);font-size:10px;color:var(--accent-strong)">1</span>
+                <div style="font-family:var(--font-display);font-size:17px;font-weight:600;color:var(--text-strong)">Map
+                  the manual work</div>
+                <div style="font-size:15px;color:var(--text-mute);margin-top:4px">Shadow the process, find the
+                  repeatable decisions.</div>
+              </div>
+              <div data-step style="position:relative"><span
+                  style="position:absolute;left:-30px;top:3px;width:19px;height:19px;border-radius:50%;border:1px solid var(--rule);background:var(--bg-deep);display:grid;place-items:center;font-family:var(--font-mono);font-size:10px;color:var(--accent-strong)">2</span>
+                <div style="font-family:var(--font-display);font-size:17px;font-weight:600;color:var(--text-strong)">
+                  Build the agent with guardrails</div>
+                <div style="font-size:15px;color:var(--text-mute);margin-top:4px">Scoped tools, explicit rules, full
+                  decision logs.</div>
+              </div>
+              <div data-step style="position:relative"><span
+                  style="position:absolute;left:-30px;top:3px;width:19px;height:19px;border-radius:50%;border:1px solid var(--rule);background:var(--bg-deep);display:grid;place-items:center;font-family:var(--font-mono);font-size:10px;color:var(--accent-strong)">3</span>
+                <div style="font-family:var(--font-display);font-size:17px;font-weight:600;color:var(--text-strong)">
+                  Measure, then widen scope</div>
+                <div style="font-size:15px;color:var(--text-mute);margin-top:4px">Accuracy tracked against human
+                  baseline before we hand over more.</div>
+              </div>
+            </div>
+
+            <div data-stats
+              style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:var(--radius-card);overflow:hidden">
+              <div data-stat style="background:var(--bg-card);padding:22px 20px">
+                <div data-count data-to="400" data-suffix="%"
+                  style="font-family:var(--font-display);font-size:clamp(30px,3vw,40px);font-weight:700;letter-spacing:-.03em;color:var(--text-strong);line-height:1">
+                  400%</div>
+                <div style="font-size:14px;color:var(--text-mute);margin-top:6px">faster lead generation</div>
+              </div>
+              <div data-stat style="background:var(--bg-card);padding:22px 20px">
+                <div data-count data-to="92" data-suffix="%"
+                  style="font-family:var(--font-display);font-size:clamp(30px,3vw,40px);font-weight:700;letter-spacing:-.03em;color:var(--text-strong);line-height:1">
+                  92%</div>
+                <div style="font-size:14px;color:var(--text-mute);margin-top:6px">qualification accuracy</div>
+              </div>
+              <div data-stat style="background:var(--bg-card);padding:22px 20px">
+                <div
+                  style="font-family:var(--font-display);font-size:clamp(19px,1.8vw,23px);font-weight:600;letter-spacing:-.02em;color:var(--text-strong);line-height:1.15">
+                  Zero manual entry</div>
+                <div style="font-size:14px;color:var(--text-mute);margin-top:6px">data lands structured, first time
+                </div>
+              </div>
+              <div data-stat style="background:var(--bg-card);padding:22px 20px">
+                <div
+                  style="font-family:var(--font-display);font-size:clamp(19px,1.8vw,23px);font-weight:600;letter-spacing:-.02em;color:var(--text-strong);line-height:1.15">
+                  Scales flat</div>
+                <div style="font-size:14px;color:var(--text-mute);margin-top:6px">more volume, no extra headcount</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="svc-2" data-svc="2"
+        style="position:relative;z-index:1;border-top:1px solid var(--rule);padding:clamp(64px,9vw,140px) clamp(20px,5vw,72px)">
+        <div
+          style="max-width:1440px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(32px,5vw,80px);align-items:start">
+          <div style="position:sticky;top:112px">
+            <div data-svc-index
+              style="font-family:var(--font-mono);font-size:clamp(48px,7vw,92px);line-height:1;font-weight:700;color:var(--accent-strong);opacity:.16;letter-spacing:-.04em">
+              02</div>
+            <div data-icon
+              style="margin:18px 0 20px;width:44px;height:44px;border:1px solid var(--rule);border-radius:12px;display:grid;place-items:center;background:var(--bg-card)">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent-strong)"
+                stroke-width="1.4">
+                <rect x="2" y="4" width="14" height="11" rx="1.6"></rect>
+                <rect x="17" y="9" width="5" height="11" rx="1.4"></rect>
+                <path d="M6 19h6"></path>
+              </svg>
+            </div>
+            <h2 data-split
+              style="margin:0;font-family:var(--font-display);font-weight:700;font-size:clamp(30px,3.6vw,46px);line-height:1.03;letter-spacing:-.03em;color:var(--text-strong)">
+              Web &amp; Mobile Platforms</h2>
+            <p data-fade style="margin:16px 0 0;max-width:38ch;font-size:17px;line-height:1.5;color:var(--text)">
+              Cross-platform products built once, shipped everywhere: Flutter, React, Next.js.</p>
+            <a href="#/services/web-mobile-platforms" data-fade
+              style="display:inline-flex;align-items:center;gap:8px;margin-top:22px;font-size:15px;font-weight:500;border-bottom:1px solid var(--accent-strong);padding-bottom:3px">Service
+              detail<span aria-hidden="true">→</span></a>
+          </div>
+          <div style="display:grid;gap:clamp(28px,3.5vw,44px)">
+            <p data-fade
+              style="margin:0;font-size:clamp(17px,1.4vw,20px);line-height:1.6;color:var(--text);max-width:58ch;text-wrap:pretty">
+              One codebase, one design language, every surface your customers use. We build the web app and the native
+              apps from shared foundations so a change ships everywhere in the same release and we keep the deployment,
+              monitoring and rollback story boring on purpose.</p>
+
+            <div data-flow style="position:relative;display:grid;gap:22px;padding-left:30px">
+              <div data-flowline
+                style="position:absolute;left:9px;top:8px;bottom:8px;width:1px;background:var(--rule);transform-origin:top center">
+              </div>
+              <div data-step style="position:relative"><span
+                  style="position:absolute;left:-30px;top:3px;width:19px;height:19px;border-radius:50%;border:1px solid var(--rule);background:var(--bg-deep);display:grid;place-items:center;font-family:var(--font-mono);font-size:10px;color:var(--accent-strong)">1</span>
+                <div style="font-family:var(--font-display);font-size:17px;font-weight:600;color:var(--text-strong)">
+                  Define the shared core</div>
+                <div style="font-size:15px;color:var(--text-mute);margin-top:4px">Data model, auth, design tokens agreed
+                  before UI.</div>
+              </div>
+              <div data-step style="position:relative"><span
+                  style="position:absolute;left:-30px;top:3px;width:19px;height:19px;border-radius:50%;border:1px solid var(--rule);background:var(--bg-deep);display:grid;place-items:center;font-family:var(--font-mono);font-size:10px;color:var(--accent-strong)">2</span>
+                <div style="font-family:var(--font-display);font-size:17px;font-weight:600;color:var(--text-strong)">
+                  Ship platform by platform</div>
+                <div style="font-size:15px;color:var(--text-mute);margin-top:4px">Weekly builds in your hands, not a big
+                  reveal.</div>
+              </div>
+              <div data-step style="position:relative"><span
+                  style="position:absolute;left:-30px;top:3px;width:19px;height:19px;border-radius:50%;border:1px solid var(--rule);background:var(--bg-deep);display:grid;place-items:center;font-family:var(--font-mono);font-size:10px;color:var(--accent-strong)">3</span>
+                <div style="font-family:var(--font-display);font-size:17px;font-weight:600;color:var(--text-strong)">
+                  Harden and hand over</div>
+                <div style="font-size:15px;color:var(--text-mute);margin-top:4px">Monitoring, CI, and docs your team can
+                  run.</div>
+              </div>
+            </div>
+
+            <div data-stats
+              style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:var(--radius-card);overflow:hidden">
+              <div data-stat style="background:var(--bg-card);padding:22px 20px">
+                <div data-count data-to="99.99" data-suffix="%" data-dec="2"
+                  style="font-family:var(--font-display);font-size:clamp(30px,3vw,40px);font-weight:700;letter-spacing:-.03em;color:var(--text-strong);line-height:1">
+                  99.99%</div>
+                <div style="font-size:14px;color:var(--text-mute);margin-top:6px">uptime in production</div>
+              </div>
+              <div data-stat style="background:var(--bg-card);padding:22px 20px">
+                <div data-count data-to="1" data-prefix=""
+                  style="font-family:var(--font-display);font-size:clamp(30px,3vw,40px);font-weight:700;letter-spacing:-.03em;color:var(--text-strong);line-height:1">
+                  1</div>
+                <div style="font-size:14px;color:var(--text-mute);margin-top:6px">codebase, every platform</div>
+              </div>
+              <div data-stat style="background:var(--bg-card);padding:22px 20px">
+                <div
+                  style="font-family:var(--font-display);font-size:clamp(19px,1.8vw,23px);font-weight:600;letter-spacing:-.02em;color:var(--text-strong);line-height:1.15">
+                  Consistent UX</div>
+                <div style="font-size:14px;color:var(--text-mute);margin-top:6px">phone, tablet, desktop behave alike
+                </div>
+              </div>
+              <div data-stat style="background:var(--bg-card);padding:22px 20px">
+                <div
+                  style="font-family:var(--font-display);font-size:clamp(19px,1.8vw,23px);font-weight:600;letter-spacing:-.02em;color:var(--text-strong);line-height:1.15">
+                  Faster iteration</div>
+                <div style="font-size:14px;color:var(--text-mute);margin-top:6px">one change, one release, all surfaces
+                </div>
+              </div>
+            </div>
+
+            <a href="#/work/gardenrich" data-case
+              style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0;border:1px solid var(--rule);border-radius:var(--radius-card);overflow:hidden;background:var(--bg-card);color:var(--text-strong)">
+              <div style="padding:clamp(20px,2.4vw,30px)">
+                <div
+                  style="font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-mute)">
+                  Case study</div>
+                <div
+                  style="font-family:var(--font-display);font-size:clamp(22px,2.2vw,30px);font-weight:700;letter-spacing:-.025em;margin-top:10px">
+                  GardenRich</div>
+                <div style="font-size:15px;color:var(--text-mute);margin-top:8px;max-width:34ch">Storefront, ordering
+                  and admin, web and mobile, from one shared core.</div>
+                <div
+                  style="display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-size:15px;color:var(--accent-strong)">
+                  Read the build<span aria-hidden="true">→</span></div>
+              </div>
+              <div data-shot
+                style="position:relative;min-height:190px;background:var(--bg-sunk);border-left:1px solid var(--rule);display:grid;place-items:center;overflow:hidden">
+                <span
+                  style="font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-mute)">GardenRich
+                  screenshot</span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section id="svc-3" data-svc="3"
+        style="position:relative;z-index:1;border-top:1px solid var(--rule);padding:clamp(64px,9vw,140px) clamp(20px,5vw,72px)">
+        <div
+          style="max-width:1440px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(32px,5vw,80px);align-items:start">
+          <div style="position:sticky;top:112px">
+            <div data-svc-index
+              style="font-family:var(--font-mono);font-size:clamp(48px,7vw,92px);line-height:1;font-weight:700;color:var(--accent-strong);opacity:.16;letter-spacing:-.04em">
+              03</div>
+            <div data-icon
+              style="margin:18px 0 20px;width:44px;height:44px;border:1px solid var(--rule);border-radius:12px;display:grid;place-items:center;background:var(--bg-card)">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent-strong)"
+                stroke-width="1.4">
+                <path d="M3 4h2.2l2.3 10.4a1.6 1.6 0 0 0 1.6 1.3h7.6a1.6 1.6 0 0 0 1.6-1.2L20 7.5H6.2"></path>
+                <circle cx="10" cy="19.4" r="1.3"></circle>
+                <circle cx="17" cy="19.4" r="1.3"></circle>
+              </svg>
+            </div>
+            <h2 data-split
+              style="margin:0;font-family:var(--font-display);font-weight:700;font-size:clamp(30px,3.6vw,46px);line-height:1.03;letter-spacing:-.03em;color:var(--text-strong)">
+              E-Commerce &amp; Payments</h2>
+            <p data-fade style="margin:16px 0 0;max-width:38ch;font-size:17px;line-height:1.5;color:var(--text)">
+              Ordering, reservations, and custom payment flows that cut out unnecessary fees.</p>
+            <a href="#/services/ecommerce-payments" data-fade
+              style="display:inline-flex;align-items:center;gap:8px;margin-top:22px;font-size:15px;font-weight:500;border-bottom:1px solid var(--accent-strong);padding-bottom:3px">Service
+              detail<span aria-hidden="true">→</span></a>
+          </div>
+          <div style="display:grid;gap:clamp(28px,3.5vw,44px)">
+            <p data-fade
+              style="margin:0;font-size:clamp(17px,1.4vw,20px);line-height:1.6;color:var(--text);max-width:58ch;text-wrap:pretty">
+              Marketplace platforms take a cut of every order and give you a rented relationship with your customer. We
+              build the ordering, reservation and payment layer you own direct processing, your own data, and operations
+              tooling that holds up across multiple locations on a Friday night.</p>
+
+            <div data-flow style="position:relative;display:grid;gap:22px;padding-left:30px">
+              <div data-flowline
+                style="position:absolute;left:9px;top:8px;bottom:8px;width:1px;background:var(--rule);transform-origin:top center">
+              </div>
+              <div data-step style="position:relative"><span
+                  style="position:absolute;left:-30px;top:3px;width:19px;height:19px;border-radius:50%;border:1px solid var(--rule);background:var(--bg-deep);display:grid;place-items:center;font-family:var(--font-mono);font-size:10px;color:var(--accent-strong)">1</span>
+                <div style="font-family:var(--font-display);font-size:17px;font-weight:600;color:var(--text-strong)">
+                  Model the real order flow</div>
+                <div style="font-size:15px;color:var(--text-mute);margin-top:4px">Kitchen, floor, delivery as it
+                  actually runs.</div>
+              </div>
+              <div data-step style="position:relative"><span
+                  style="position:absolute;left:-30px;top:3px;width:19px;height:19px;border-radius:50%;border:1px solid var(--rule);background:var(--bg-deep);display:grid;place-items:center;font-family:var(--font-mono);font-size:10px;color:var(--accent-strong)">2</span>
+                <div style="font-family:var(--font-display);font-size:17px;font-weight:600;color:var(--text-strong)">
+                  Build direct payments</div>
+                <div style="font-size:15px;color:var(--text-mute);margin-top:4px">Own the processor relationship, drop
+                  the middle fee.</div>
+              </div>
+              <div data-step style="position:relative"><span
+                  style="position:absolute;left:-30px;top:3px;width:19px;height:19px;border-radius:50%;border:1px solid var(--rule);background:var(--bg-deep);display:grid;place-items:center;font-family:var(--font-mono);font-size:10px;color:var(--accent-strong)">3</span>
+                <div style="font-family:var(--font-display);font-size:17px;font-weight:600;color:var(--text-strong)">
+                  Roll out location by location</div>
+                <div style="font-size:15px;color:var(--text-mute);margin-top:4px">Staff trained, margin tracked per
+                  site.</div>
+              </div>
+            </div>
+
+            <div data-stats
+              style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:var(--radius-card);overflow:hidden">
+              <div data-stat style="background:var(--bg-card);padding:22px 20px">
+                <div data-count data-to="3" data-prefix="+" data-suffix="%"
+                  style="font-family:var(--font-display);font-size:clamp(30px,3vw,40px);font-weight:700;letter-spacing:-.03em;color:var(--text-strong);line-height:1">
+                  +3%</div>
+                <div style="font-size:14px;color:var(--text-mute);margin-top:6px">net margin recovered on digital orders
+                </div>
+              </div>
+              <div data-stat style="background:var(--bg-card);padding:22px 20px">
+                <div
+                  style="font-family:var(--font-display);font-size:clamp(19px,1.8vw,23px);font-weight:600;letter-spacing:-.02em;color:var(--text-strong);line-height:1.15">
+                  Custom payment flows</div>
+                <div style="font-size:14px;color:var(--text-mute);margin-top:6px">lower fees than marketplace rails
+                </div>
+              </div>
+              <div data-stat style="background:var(--bg-card);padding:22px 20px">
+                <div
+                  style="font-family:var(--font-display);font-size:clamp(19px,1.8vw,23px);font-weight:600;letter-spacing:-.02em;color:var(--text-strong);line-height:1.15">
+                  Real-time reservations</div>
+                <div style="font-size:14px;color:var(--text-mute);margin-top:6px">tables and slots managed live</div>
+              </div>
+              <div data-stat style="background:var(--bg-card);padding:22px 20px">
+                <div
+                  style="font-family:var(--font-display);font-size:clamp(19px,1.8vw,23px);font-weight:600;letter-spacing:-.02em;color:var(--text-strong);line-height:1.15">
+                  Multi-location</div>
+                <div style="font-size:14px;color:var(--text-mute);margin-top:6px">built for scale from day one</div>
+              </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px">
+              <a href="#/work/rasoi-by-tsn" data-case
+                style="display:grid;border:1px solid var(--rule);border-radius:var(--radius-card);overflow:hidden;background:var(--bg-card);color:var(--text-strong)">
+                <div data-shot
+                  style="position:relative;min-height:150px;background:var(--bg-sunk);border-bottom:1px solid var(--rule);display:grid;place-items:center;overflow:hidden">
+                  <span
+                    style="font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-mute)">Rasoi
+                    screenshot</span></div>
+                <div style="padding:20px 22px 22px">
+                  <div
+                    style="font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-mute)">
+                    Case study</div>
+                  <div
+                    style="font-family:var(--font-display);font-size:clamp(20px,1.9vw,26px);font-weight:700;letter-spacing:-.025em;margin-top:8px">
+                    Rasoi by TSN</div>
+                  <div style="font-size:15px;color:var(--text-mute);margin-top:6px">Direct ordering across locations;
+                    +3% net margin.</div>
+                </div>
+              </a>
+              <a href="#/work/charm-avenue" data-case
+                style="display:grid;border:1px solid var(--rule);border-radius:var(--radius-card);overflow:hidden;background:var(--bg-card);color:var(--text-strong)">
+                <div data-shot
+                  style="position:relative;min-height:150px;background:var(--bg-sunk);border-bottom:1px solid var(--rule);display:grid;place-items:center;overflow:hidden">
+                  <span
+                    style="font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-mute)">Charm
+                    Avenue screenshot</span></div>
+                <div style="padding:20px 22px 22px">
+                  <div
+                    style="font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-mute)">
+                    Case study</div>
+                  <div
+                    style="font-family:var(--font-display);font-size:clamp(20px,1.9vw,26px);font-weight:700;letter-spacing:-.025em;margin-top:8px">
+                    Charm Avenue</div>
+                  <div style="font-size:15px;color:var(--text-mute);margin-top:6px">Reservations and payments for a
+                    multi-site venue.</div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="svc-4" data-svc="4"
+        style="position:relative;z-index:1;border-top:1px solid var(--rule);padding:clamp(64px,9vw,140px) clamp(20px,5vw,72px)">
+        <div
+          style="max-width:1440px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(32px,5vw,80px);align-items:start">
+          <div style="position:sticky;top:112px">
+            <div data-svc-index
+              style="font-family:var(--font-mono);font-size:clamp(48px,7vw,92px);line-height:1;font-weight:700;color:var(--accent-strong);opacity:.16;letter-spacing:-.04em">
+              04</div>
+            <div data-icon
+              style="margin:18px 0 20px;width:44px;height:44px;border:1px solid var(--rule);border-radius:12px;display:grid;place-items:center;background:var(--bg-card)">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent-strong)"
+                stroke-width="1.4">
+                <path d="M12 3l7 3v5.5c0 4.3-2.9 7.9-7 9.5-4.1-1.6-7-5.2-7-9.5V6z"></path>
+                <path d="M12 9.2v5.6M9.2 12h5.6"></path>
+              </svg>
+            </div>
+            <h2 data-split
+              style="margin:0;font-family:var(--font-display);font-weight:700;font-size:clamp(30px,3.6vw,46px);line-height:1.03;letter-spacing:-.03em;color:var(--text-strong)">
+              Healthcare &amp; Enterprise Software</h2>
+            <p data-fade style="margin:16px 0 0;max-width:38ch;font-size:17px;line-height:1.5;color:var(--text)">Secure,
+              compliant systems for handling sensitive data at scale.</p>
+            <a href="#/services/healthcare-enterprise" data-fade
+              style="display:inline-flex;align-items:center;gap:8px;margin-top:22px;font-size:15px;font-weight:500;border-bottom:1px solid var(--accent-strong);padding-bottom:3px">Service
+              detail<span aria-hidden="true">→</span></a>
+          </div>
+          <div style="display:grid;gap:clamp(28px,3.5vw,44px)">
+            <p data-fade
+              style="margin:0;font-size:clamp(17px,1.4vw,20px);line-height:1.6;color:var(--text);max-width:58ch;text-wrap:pretty">
+              Clinical and enterprise teams lose hours to systems that were never designed around their workflow. We
+              build records, intake and reporting tools with access control at the data layer, audit trails by default,
+              and interfaces shaped by watching the people who use them all day.</p>
+
+            <div data-flow style="position:relative;display:grid;gap:22px;padding-left:30px">
+              <div data-flowline
+                style="position:absolute;left:9px;top:8px;bottom:8px;width:1px;background:var(--rule);transform-origin:top center">
+              </div>
+              <div data-step style="position:relative"><span
+                  style="position:absolute;left:-30px;top:3px;width:19px;height:19px;border-radius:50%;border:1px solid var(--rule);background:var(--bg-deep);display:grid;place-items:center;font-family:var(--font-mono);font-size:10px;color:var(--accent-strong)">1</span>
+                <div style="font-family:var(--font-display);font-size:17px;font-weight:600;color:var(--text-strong)">
+                  Audit data and access</div>
+                <div style="font-size:15px;color:var(--text-mute);margin-top:4px">Who touches what, and under which
+                  rule.</div>
+              </div>
+              <div data-step style="position:relative"><span
+                  style="position:absolute;left:-30px;top:3px;width:19px;height:19px;border-radius:50%;border:1px solid var(--rule);background:var(--bg-deep);display:grid;place-items:center;font-family:var(--font-mono);font-size:10px;color:var(--accent-strong)">2</span>
+                <div style="font-family:var(--font-display);font-size:17px;font-weight:600;color:var(--text-strong)">
+                  Build to the compliance line</div>
+                <div style="font-size:15px;color:var(--text-mute);margin-top:4px">Encryption, roles and audit logs from
+                  the first commit.</div>
+              </div>
+              <div data-step style="position:relative"><span
+                  style="position:absolute;left:-30px;top:3px;width:19px;height:19px;border-radius:50%;border:1px solid var(--rule);background:var(--bg-deep);display:grid;place-items:center;font-family:var(--font-mono);font-size:10px;color:var(--accent-strong)">3</span>
+                <div style="font-family:var(--font-display);font-size:17px;font-weight:600;color:var(--text-strong)">
+                  Roll out beside the old system</div>
+                <div style="font-size:15px;color:var(--text-mute);margin-top:4px">Parallel running until the numbers
+                  agree.</div>
+              </div>
+            </div>
+
+            <div data-stats
+              style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:var(--radius-card);overflow:hidden">
+              <div data-stat style="background:var(--bg-card);padding:22px 20px">
+                <div data-count data-to="45" data-suffix="%"
+                  style="font-family:var(--font-display);font-size:clamp(30px,3vw,40px);font-weight:700;letter-spacing:-.03em;color:var(--text-strong);line-height:1">
+                  45%</div>
+                <div style="font-size:14px;color:var(--text-mute);margin-top:6px">faster record retrieval</div>
+              </div>
+              <div data-stat style="background:var(--bg-card);padding:22px 20px">
+                <div
+                  style="font-family:var(--font-display);font-size:clamp(19px,1.8vw,23px);font-weight:600;letter-spacing:-.02em;color:var(--text-strong);line-height:1.15">
+                  Enterprise-grade security</div>
+                <div style="font-size:14px;color:var(--text-mute);margin-top:6px">encryption and audit trails as
+                  standard</div>
+              </div>
+              <div data-stat style="background:var(--bg-card);padding:22px 20px">
+                <div
+                  style="font-family:var(--font-display);font-size:clamp(19px,1.8vw,23px);font-weight:600;letter-spacing:-.02em;color:var(--text-strong);line-height:1.15">
+                  Web + mobile</div>
+                <div style="font-size:14px;color:var(--text-mute);margin-top:6px">same record, ward or desk</div>
+              </div>
+              <div data-stat style="background:var(--bg-card);padding:22px 20px">
+                <div
+                  style="font-family:var(--font-display);font-size:clamp(19px,1.8vw,23px);font-weight:600;letter-spacing:-.02em;color:var(--text-strong);line-height:1.15">
+                  Fewer entry errors</div>
+                <div style="font-size:14px;color:var(--text-mute);margin-top:6px">validation where clinicians type</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="svc-5" data-svc="5"
+        style="position:relative;z-index:1;border-top:1px solid var(--rule);padding:clamp(64px,9vw,140px) clamp(20px,5vw,72px)">
+        <div
+          style="max-width:1440px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(32px,5vw,80px);align-items:start">
+          <div style="position:sticky;top:112px">
+            <div data-svc-index
+              style="font-family:var(--font-mono);font-size:clamp(48px,7vw,92px);line-height:1;font-weight:700;color:var(--accent-strong);opacity:.16;letter-spacing:-.04em">
+              05</div>
+            <div data-icon
+              style="margin:18px 0 20px;width:44px;height:44px;border:1px solid var(--rule);border-radius:12px;display:grid;place-items:center;background:var(--bg-card)">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent-strong)"
+                stroke-width="1.4">
+                <path d="M12 3.4 21 8l-9 4.6L3 8z"></path>
+                <path d="M3 12.4 12 17l9-4.6"></path>
+                <path d="M3 16.6 12 21.2l9-4.6"></path>
+              </svg>
+            </div>
+            <h2 data-split
+              style="margin:0;font-family:var(--font-display);font-weight:700;font-size:clamp(30px,3.6vw,46px);line-height:1.03;letter-spacing:-.03em;color:var(--text-strong)">
+              Custom Full-Stack Development</h2>
+            <p data-fade style="margin:16px 0 0;max-width:38ch;font-size:17px;line-height:1.5;color:var(--text)">
+              End-to-end builds, database to deployment, tailored to how the business runs.</p>
+            <a href="#/services/custom-full-stack" data-fade
+              style="display:inline-flex;align-items:center;gap:8px;margin-top:22px;font-size:15px;font-weight:500;border-bottom:1px solid var(--accent-strong);padding-bottom:3px">Service
+              detail<span aria-hidden="true">→</span></a>
+          </div>
+          <div style="display:grid;gap:clamp(28px,3.5vw,44px)">
+            <p data-fade
+              style="margin:0;font-size:clamp(17px,1.4vw,20px);line-height:1.6;color:var(--text);max-width:58ch;text-wrap:pretty">
+              When off-the-shelf software forces the business to work backwards, we build the thing that fits. Schema,
+              API, interface, deployment and the support after launch one team accountable for the whole stack, with
+              row-level security applied from the database up rather than patched at the edge.</p>
+
+            <div data-flow style="position:relative;display:grid;gap:22px;padding-left:30px">
+              <div data-flowline
+                style="position:absolute;left:9px;top:8px;bottom:8px;width:1px;background:var(--rule);transform-origin:top center">
+              </div>
+              <div data-step style="position:relative"><span
+                  style="position:absolute;left:-30px;top:3px;width:19px;height:19px;border-radius:50%;border:1px solid var(--rule);background:var(--bg-deep);display:grid;place-items:center;font-family:var(--font-mono);font-size:10px;color:var(--accent-strong)">1</span>
+                <div style="font-family:var(--font-display);font-size:17px;font-weight:600;color:var(--text-strong)">
+                  Model the business, not the app</div>
+                <div style="font-size:15px;color:var(--text-mute);margin-top:4px">Schema first, drawn from real
+                  workflow.</div>
+              </div>
+              <div data-step style="position:relative"><span
+                  style="position:absolute;left:-30px;top:3px;width:19px;height:19px;border-radius:50%;border:1px solid var(--rule);background:var(--bg-deep);display:grid;place-items:center;font-family:var(--font-mono);font-size:10px;color:var(--accent-strong)">2</span>
+                <div style="font-family:var(--font-display);font-size:17px;font-weight:600;color:var(--text-strong)">
+                  Build in the open</div>
+                <div style="font-size:15px;color:var(--text-mute);margin-top:4px">Shared board, weekly demo, no surprise
+                  invoices.</div>
+              </div>
+              <div data-step style="position:relative"><span
+                  style="position:absolute;left:-30px;top:3px;width:19px;height:19px;border-radius:50%;border:1px solid var(--rule);background:var(--bg-deep);display:grid;place-items:center;font-family:var(--font-mono);font-size:10px;color:var(--accent-strong)">3</span>
+                <div style="font-family:var(--font-display);font-size:17px;font-weight:600;color:var(--text-strong)">
+                  Deploy and keep improving</div>
+                <div style="font-size:15px;color:var(--text-mute);margin-top:4px">Support and iteration after go-live,
+                  not a handoff.</div>
+              </div>
+            </div>
+
+            <div data-stats
+              style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:var(--radius-card);overflow:hidden">
+              <div data-stat style="background:var(--bg-card);padding:22px 20px">
+                <div
+                  style="font-family:var(--font-display);font-size:clamp(19px,1.8vw,23px);font-weight:600;letter-spacing:-.02em;color:var(--text-strong);line-height:1.15">
+                  Schema → deployment</div>
+                <div style="font-size:14px;color:var(--text-mute);margin-top:6px">one team, whole stack</div>
+              </div>
+              <div data-stat style="background:var(--bg-card);padding:22px 20px">
+                <div
+                  style="font-family:var(--font-display);font-size:clamp(19px,1.8vw,23px);font-weight:600;letter-spacing:-.02em;color:var(--text-strong);line-height:1.15">
+                  Row-level security</div>
+                <div style="font-size:14px;color:var(--text-mute);margin-top:6px">by default, not bolted on</div>
+              </div>
+              <div data-stat style="background:var(--bg-card);padding:22px 20px">
+                <div
+                  style="font-family:var(--font-display);font-size:clamp(19px,1.8vw,23px);font-weight:600;letter-spacing:-.02em;color:var(--text-strong);line-height:1.15">
+                  Built around workflow</div>
+                <div style="font-size:14px;color:var(--text-mute);margin-top:6px">the real one, observed on site</div>
+              </div>
+              <div data-stat style="background:var(--bg-card);padding:22px 20px">
+                <div
+                  style="font-family:var(--font-display);font-size:clamp(19px,1.8vw,23px);font-weight:600;letter-spacing:-.02em;color:var(--text-strong);line-height:1.15">
+                  Supported after launch</div>
+                <div style="font-size:14px;color:var(--text-mute);margin-top:6px">continuous iteration, not a handover
+                </div>
+              </div>
+            </div>
+
+            <a href="#/work/vishal-fitness" data-case
+              style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0;border:1px solid var(--rule);border-radius:var(--radius-card);overflow:hidden;background:var(--bg-card);color:var(--text-strong)">
+              <div style="padding:clamp(20px,2.4vw,30px)">
+                <div
+                  style="font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-mute)">
+                  Case study</div>
+                <div
+                  style="font-family:var(--font-display);font-size:clamp(22px,2.2vw,30px);font-weight:700;letter-spacing:-.025em;margin-top:10px">
+                  Vishal Fitness Gym Pulse</div>
+                <div style="font-size:15px;color:var(--text-mute);margin-top:8px;max-width:34ch">Membership, scheduling
+                  and billing built around how the gym floor actually runs.</div>
+                <div
+                  style="display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-size:15px;color:var(--accent-strong)">
+                  Read the build<span aria-hidden="true">→</span></div>
+              </div>
+              <div data-shot
+                style="position:relative;min-height:190px;background:var(--bg-sunk);border-left:1px solid var(--rule);display:grid;place-items:center;overflow:hidden">
+                <span
+                  style="font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-mute)">Pulse
+                  screenshot</span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section id="svc-cta"
+        style="position:relative;z-index:1;border-top:1px solid var(--rule);padding:clamp(72px,10vw,150px) clamp(20px,5vw,72px)">
+        <div
+          style="max-width:1440px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(28px,5vw,72px);align-items:end">
+          <h2 data-split
+            style="margin:0;font-family:var(--font-display);font-weight:700;font-size:clamp(34px,5.4vw,68px);line-height:1;letter-spacing:-.035em;color:var(--text-strong)">
+            Tell us what is slow, manual, or breaking.</h2>
+          <div>
+            <p data-fade style="margin:0 0 22px;font-size:17px;line-height:1.55;color:var(--text);max-width:44ch">We
+              will tell you whether software fixes it, what it would take, and what it would cost before either of us
+              commits.</p>
+            <a href="#/contact" data-magnetic
+              style="display:inline-flex;align-items:center;gap:10px;background:var(--accent-strong);color:#fff;font-size:16px;font-weight:500;padding:16px 26px;border-radius:999px">Book
+              a scoping call<span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </x-dc>
+  <script type="text/x-dc" data-dc-script
+    data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { theme: null };
+
+  componentDidMount() {
+    const saved = null;
+    this.root = document.querySelector('[data-dots]') ? document.querySelector('[data-dots]').closest('div') : document;
+    this.waitForGsap2(0);
+    // In-page jumps must not write to location.hash   the app is a hash-router SPA.
+    document.addEventListener('click', (e) => {
+      const a = e.target && e.target.closest ? e.target.closest('a[href^="#svc-"]') : null;
+      if (!a) return;
+      const target = document.getElementById(a.getAttribute('href').slice(1));
+      if (!target) return;
+      e.preventDefault();
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 96, behavior: reduce ? 'auto' : 'smooth' });
+    });
+  }
+
+  toggle = () => {
+    const cur = this.state.theme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    this.setState({ theme: next });
+    requestAnimationFrame(() => this.syncThreeTheme && this.syncThreeTheme());
+  };
+
+  waitForGsap2(tries) {
+    if (window.gsap && window.ScrollTrigger) return this.initMotion();
+    if (tries > 80) return;
+    setTimeout(() => this.waitForGsap2(tries + 1), 60);
+  }
+
+  splitWords(el) {
+    if (el.dataset.splitDone) return Array.from(el.querySelectorAll('span > span'));
+    const text = el.textContent;
+    el.textContent = '';
+    const spans = [];
+    text.split(/\s+/).filter(Boolean).forEach((w, i, arr) => {
+      const outer = document.createElement('span');
+      outer.style.display = 'inline-block';
+      outer.style.overflow = 'hidden';
+      outer.style.verticalAlign = 'top';
+      const inner = document.createElement('span');
+      inner.style.display = 'inline-block';
+      inner.textContent = w + (i < arr.length - 1 ? '\u00A0' : '');
+      outer.appendChild(inner);
+      el.appendChild(outer);
+      spans.push(inner);
+    });
+    el.dataset.splitDone = '1';
+    return spans;
+  }
+
+  initMotion() {
+    if (document.documentElement.dataset.qMotionInit) return;
+    document.documentElement.dataset.qMotionInit = '1';
+    const gsap = window.gsap, ScrollTrigger = window.ScrollTrigger;
+    gsap.registerPlugin(ScrollTrigger);
+    const mm = gsap.matchMedia();
+    this._mm = mm;
+    const q = (s, ctx) => Array.from((ctx || document).querySelectorAll(s));
+
+    mm.add('(prefers-reduced-motion: no-preference)', () => {
+      const ease = 'power3.out';
+
+      // Hero
+      const hero = document.querySelector('h1[data-split]');
+      const heroWords = hero ? this.splitWords(hero) : [];
+      gsap.set(heroWords, { yPercent: 115 });
+      const heroFades = q('section:first-of-type [data-fade], [data-eyebrow], [data-manifest]');
+      gsap.set(heroFades, { autoAlpha: 0, y: 18 });
+      const rows = q('[data-manifest-row]');
+      gsap.set(rows, { autoAlpha: 0, y: 14 });
+
+      const tl = gsap.timeline({
+        delay: 0.15,
+        onComplete: () => {
+          gsap.set([heroFades, rows].flat().filter(Boolean), { autoAlpha: 1, y: 0, clearProps: 'visibility' });
+          if (heroWords.length) gsap.set(heroWords, { yPercent: 0 });
+        }
+      });
+      gsap.delayedCall(3, () => {
+        const stuck = [].concat(heroFades, rows).filter((n) => n && getComputedStyle(n).opacity === '0');
+        if (stuck.length) gsap.set(stuck, { autoAlpha: 1, y: 0 });
+        if (heroWords.length) gsap.set(heroWords, { yPercent: 0 });
+      });
+      tl.to('[data-eyebrow]', { autoAlpha: 1, y: 0, duration: 0.5, ease });
+      if (heroWords.length) tl.to(heroWords, { yPercent: 0, duration: 0.9, stagger: 0.045, ease: 'expo.out' }, '-=0.2');
+      tl
+        .to(q('section:first-of-type [data-fade]'), { autoAlpha: 1, y: 0, duration: 0.6, stagger: 0.08, ease }, '-=0.55')
+        .to('[data-manifest]', { autoAlpha: 1, y: 0, duration: 0.6, ease }, '-=0.5')
+        .to(rows, { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.06, ease }, '-=0.35');
+
+      // Ambient grid drift
+      gsap.to('[data-dots]', {
+        backgroundPositionY: '260px',
+        ease: 'none',
+        scrollTrigger: { trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: 1 }
+      });
+
+      const counters = [];
+      const runCount = (el) => {
+        const to = parseFloat(el.dataset.to);
+        const dec = parseInt(el.dataset.dec || '0', 10);
+        const pre = el.dataset.prefix || '';
+        const suf = el.dataset.suffix || '';
+        const o = { v: 0 };
+        gsap.to(o, {
+          v: to, duration: 1.4, ease: 'power2.out',
+          onUpdate: () => { el.textContent = pre + o.v.toFixed(dec) + suf; }
+        });
+      };
+
+      q('section[data-svc]').forEach((sec) => {
+        const idx = sec.dataset.svc;
+        const head = sec.querySelector('h2[data-split]');
+        const words = head ? this.splitWords(head) : [];
+        const fades = q('[data-fade]', sec);
+        const steps = q('[data-step]', sec);
+        const line = sec.querySelector('[data-flowline]');
+        const stats = q('[data-stat]', sec);
+        const cases = q('[data-case]', sec);
+        const bigIdx = sec.querySelector('[data-svc-index]');
+        const icon = sec.querySelector('[data-icon]');
+
+        gsap.set(words, { yPercent: 110 });
+        gsap.set(fades, { autoAlpha: 0, y: 16 });
+        gsap.set(steps, { autoAlpha: 0, x: -14 });
+        if (line) gsap.set(line, { scaleY: 0 });
+        gsap.set(stats, { autoAlpha: 0, y: 22 });
+        gsap.set(cases, { autoAlpha: 0, y: 34 });
+        if (bigIdx) gsap.set(bigIdx, { autoAlpha: 0, y: 24 });
+        if (icon) gsap.set(icon, { autoAlpha: 0, scale: 0.8 });
+
+        const t = gsap.timeline({
+          scrollTrigger: { trigger: sec, start: 'top 72%', once: true }
+        });
+        if (bigIdx) t.to(bigIdx, { autoAlpha: 1, y: 0, duration: 0.7, ease });
+        if (icon) t.to(icon, { autoAlpha: 1, scale: 1, duration: 0.5, ease: 'back.out(2)' }, '-=0.45');
+        if (words.length) t.to(words, { yPercent: 0, duration: 0.8, stagger: 0.05, ease: 'expo.out' }, '-=0.4');
+        if (fades.length) t.to(fades, { autoAlpha: 1, y: 0, duration: 0.55, stagger: 0.07, ease }, '-=0.5');
+
+        if (line) {
+          gsap.to(line, {
+            scaleY: 1, ease: 'none',
+            scrollTrigger: { trigger: line, start: 'top 78%', end: 'bottom 60%', scrub: 0.6 }
+          });
+        }
+        gsap.to(steps, {
+          autoAlpha: 1, x: 0, duration: 0.55, stagger: 0.12, ease,
+          scrollTrigger: { trigger: steps[0] ? steps[0].parentElement : sec, start: 'top 80%', once: true }
+        });
+
+        const statWrap = sec.querySelector('[data-stats]');
+        if (statWrap) {
+          ScrollTrigger.create({
+            trigger: statWrap, start: 'top 82%', once: true,
+            onEnter: () => {
+              gsap.to(stats, { autoAlpha: 1, y: 0, duration: 0.6, stagger: 0.09, ease });
+              q('[data-count]', statWrap).forEach((el, i) => setTimeout(() => runCount(el), i * 90));
+            }
+          });
+        }
+
+        cases.forEach((c) => {
+          gsap.to(c, { autoAlpha: 1, y: 0, duration: 0.7, ease, scrollTrigger: { trigger: c, start: 'top 88%', once: true } });
+          const shot = c.querySelector('[data-shot]');
+          if (shot) {
+            gsap.fromTo(shot.firstElementChild, { yPercent: 8 }, {
+              yPercent: -8, ease: 'none',
+              scrollTrigger: { trigger: c, start: 'top bottom', end: 'bottom top', scrub: 0.8 }
+            });
+          }
+          c.addEventListener('pointermove', (e) => {
+            const r = c.getBoundingClientRect();
+            c.style.background = 'radial-gradient(420px circle at ' + (e.clientX - r.left) + 'px ' + (e.clientY - r.top) + 'px, var(--accent-wash), var(--bg-card) 60%)';
+          });
+          c.addEventListener('pointerleave', () => { c.style.background = 'var(--bg-card)'; });
+          c.addEventListener('pointerenter', () => gsap.to(c, { y: -4, duration: 0.3, ease }));
+          c.addEventListener('pointerleave', () => gsap.to(c, { y: 0, duration: 0.4, ease }));
+        });
+
+        // Rail sync
+        const railLink = document.querySelector('[data-rail="' + idx + '"]');
+        if (railLink) {
+          const fill = railLink.querySelector('[data-railfill]');
+          const label = railLink.querySelector('[data-raillabel]');
+          ScrollTrigger.create({
+            trigger: sec, start: 'top 55%', end: 'bottom 45%',
+            onToggle: (self) => {
+              gsap.to(fill, { scale: self.isActive ? 1 : 0, duration: 0.4, ease: 'back.out(2)' });
+              gsap.to(label, { opacity: self.isActive ? 1 : 0.55, x: self.isActive ? 2 : 0, color: self.isActive ? 'var(--text-strong)' : 'var(--text-mute)', duration: 0.35, ease });
+            }
+          });
+        }
+      });
+
+      // Magnetic buttons
+      const cleanups = [];
+      q('[data-magnetic]').forEach((btn) => {
+        const move = (e) => {
+          const r = btn.getBoundingClientRect();
+          gsap.to(btn, { x: (e.clientX - r.left - r.width / 2) * 0.25, y: (e.clientY - r.top - r.height / 2) * 0.35, duration: 0.4, ease });
+        };
+        const out = () => gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1,0.4)' });
+        btn.addEventListener('pointermove', move);
+        btn.addEventListener('pointerleave', out);
+        cleanups.push(() => { btn.removeEventListener('pointermove', move); btn.removeEventListener('pointerleave', out); });
+      });
+
+      return () => { cleanups.forEach((f) => f()); };
+    });
+  }
+
+  renderVals() {
+    const t = this.state.theme;
+    return {
+      toggleTheme: this.toggle,
+      themeLabel: t === 'dark' ? 'Light' : t === 'light' ? 'Dark' : 'Theme'
+    };
+  }
+}
+
+Component.prototype.splitWords = function (el) {
+  if (el.dataset.splitDone) return Array.from(el.querySelectorAll('span > span'));
+  const text = el.textContent;
+  el.textContent = '';
+  const spans = [];
+  text.split(/\s+/).filter(Boolean).forEach((w, i, arr) => {
+    const outer = document.createElement('span');
+    outer.style.display = 'inline-block';
+    outer.style.overflow = 'hidden';
+    outer.style.verticalAlign = 'top';
+    const inner = document.createElement('span');
+    inner.style.display = 'inline-block';
+    inner.textContent = w + (i < arr.length - 1 ? '\u00A0' : '');
+    outer.appendChild(inner);
+    el.appendChild(outer);
+    spans.push(inner);
+  });
+  el.dataset.splitDone = '1';
+  return spans;
+};
+
+Component.prototype.initMotion = function () {
+  const self = this;
+  const gsap = window.gsap, ScrollTrigger = window.ScrollTrigger;
+  if (!gsap || !ScrollTrigger) return;
+  const dots = document.querySelector('[data-dots]');
+  const root = dots && dots.parentElement;
+  if (!root || root.dataset.qMotion) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (document.hidden) {
+    const onVis = function () {
+      if (document.hidden) return;
+      document.removeEventListener('visibilitychange', onVis);
+      self.initMotion();
+    };
+    document.addEventListener('visibilitychange', onVis);
+    return;
+  }
+  root.dataset.qMotion = '1';
+  gsap.registerPlugin(ScrollTrigger);
+
+  const ease = 'power3.out';
+  const q = (s, ctx) => Array.from((ctx || root).querySelectorAll(s));
+  const heroSection = root.querySelector('section');
+
+  const hero = root.querySelector('h1[data-split]');
+  const heroWords = hero ? this.splitWords(hero) : [];
+  const heroFades = q('[data-fade]', heroSection);
+  const manifest = root.querySelector('[data-manifest]');
+  const rows = q('[data-manifest-row]');
+
+  const tl = gsap.timeline({ delay: 0.1 });
+  tl.from('[data-eyebrow]', { autoAlpha: 0, y: 16, duration: 0.5, ease });
+  if (heroWords.length) tl.from(heroWords, { yPercent: 115, duration: 0.9, stagger: 0.045, ease: 'expo.out' }, '-=0.2');
+  if (heroFades.length) tl.from(heroFades, { autoAlpha: 0, y: 18, duration: 0.6, stagger: 0.08, ease }, '-=0.55');
+  if (manifest) tl.from(manifest, { autoAlpha: 0, y: 18, duration: 0.6, ease }, '-=0.5');
+  if (rows.length) tl.from(rows, { autoAlpha: 0, y: 14, duration: 0.5, stagger: 0.06, ease }, '-=0.35');
+
+  gsap.to(dots, {
+    backgroundPositionY: '260px', ease: 'none',
+    scrollTrigger: { trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: 1 }
+  });
+
+  const runCount = (el) => {
+    const to = parseFloat(el.dataset.to);
+    const dec = parseInt(el.dataset.dec || '0', 10);
+    const pre = el.dataset.prefix || '';
+    const suf = el.dataset.suffix || '';
+    const o = { v: 0 };
+    gsap.to(o, {
+      v: to, duration: 1.4, ease: 'power2.out',
+      onUpdate: () => { el.textContent = pre + o.v.toFixed(dec) + suf; }
+    });
+  };
+
+  q('section[data-svc]').forEach((sec) => {
+    const head = sec.querySelector('h2[data-split]');
+    const words = head ? self.splitWords(head) : [];
+    const fades = q('[data-fade]', sec);
+    const steps = q('[data-step]', sec);
+    const line = sec.querySelector('[data-flowline]');
+    const stats = q('[data-stat]', sec);
+    const cases = q('[data-case]', sec);
+    const bigIdx = sec.querySelector('[data-svc-index]');
+    const icon = sec.querySelector('[data-icon]');
+
+    const t = gsap.timeline({ scrollTrigger: { trigger: sec, start: 'top 75%', once: true } });
+    if (bigIdx) t.from(bigIdx, { autoAlpha: 0, y: 24, duration: 0.7, ease });
+    if (icon) t.from(icon, { autoAlpha: 0, scale: 0.8, duration: 0.5, ease: 'back.out(2)' }, '-=0.45');
+    if (words.length) t.from(words, { yPercent: 110, duration: 0.8, stagger: 0.05, ease: 'expo.out' }, '-=0.4');
+    if (fades.length) t.from(fades, { autoAlpha: 0, y: 16, duration: 0.55, stagger: 0.07, ease }, '-=0.5');
+
+    if (line) {
+      gsap.from(line, {
+        scaleY: 0, ease: 'none',
+        scrollTrigger: { trigger: line, start: 'top 80%', end: 'bottom 62%', scrub: 0.6 }
+      });
+    }
+    if (steps.length) {
+      gsap.from(steps, {
+        autoAlpha: 0, x: -14, duration: 0.55, stagger: 0.12, ease,
+        scrollTrigger: { trigger: steps[0].parentElement, start: 'top 82%', once: true }
+      });
+    }
+    const statWrap = sec.querySelector('[data-stats]');
+    if (statWrap && stats.length) {
+      gsap.from(stats, {
+        autoAlpha: 0, y: 22, duration: 0.6, stagger: 0.09, ease,
+        scrollTrigger: {
+          trigger: statWrap, start: 'top 84%', once: true,
+          onEnter: () => q('[data-count]', statWrap).forEach((el, i) => setTimeout(() => runCount(el), i * 90))
+        }
+      });
+    }
+
+    cases.forEach((c) => {
+      gsap.from(c, { autoAlpha: 0, y: 34, duration: 0.7, ease, scrollTrigger: { trigger: c, start: 'top 90%', once: true } });
+      const shotLabel = c.querySelector('[data-shot] > *');
+      if (shotLabel) {
+        gsap.fromTo(shotLabel, { yPercent: 8 }, {
+          yPercent: -8, ease: 'none',
+          scrollTrigger: { trigger: c, start: 'top bottom', end: 'bottom top', scrub: 0.8 }
+        });
+      }
+      c.addEventListener('pointermove', (e) => {
+        const r = c.getBoundingClientRect();
+        c.style.background = 'radial-gradient(420px circle at ' + (e.clientX - r.left) + 'px ' + (e.clientY - r.top) + 'px, var(--accent-wash), var(--bg-card) 60%)';
+      });
+      c.addEventListener('pointerenter', () => gsap.to(c, { y: -4, duration: 0.3, ease, overwrite: 'auto' }));
+      c.addEventListener('pointerleave', () => {
+        c.style.background = 'var(--bg-card)';
+        gsap.to(c, { y: 0, duration: 0.4, ease, overwrite: 'auto' });
+      });
+    });
+
+    const railLink = document.querySelector('[data-rail="' + sec.dataset.svc + '"]');
+    if (railLink) {
+      const fill = railLink.querySelector('[data-railfill]');
+      const label = railLink.querySelector('[data-raillabel]');
+      ScrollTrigger.create({
+        trigger: sec, start: 'top 55%', end: 'bottom 45%',
+        onToggle: (s) => {
+          gsap.to(fill, { scale: s.isActive ? 1 : 0, duration: 0.4, ease: 'back.out(2)' });
+          gsap.to(label, { x: s.isActive ? 2 : 0, color: s.isActive ? 'var(--text-strong)' : 'var(--text-mute)', duration: 0.35, ease });
+        }
+      });
+    }
+  });
+
+  const bar = root.querySelector('[data-progress]');
+  const header = root.querySelector('header');
+  if (bar) gsap.to(bar, { scaleX: 1, ease: 'none', scrollTrigger: { trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: 0.3 } });
+
+  const railProg = root.querySelector('[data-railprogress]');
+  if (railProg) {
+    gsap.to(railProg, { scaleX: 1, ease: 'none', scrollTrigger: { trigger: root.querySelector('#svc-1'), start: 'top 70%', endTrigger: root.querySelector('#svc-5'), end: 'bottom 55%', scrub: 0.5 } });
+  }
+
+
+  const skewSetters = q('section > div').map((n) => gsap.quickTo(n, 'skewY', { duration: 0.5, ease: 'power3.out' }));
+  ScrollTrigger.create({
+    start: 0, end: 'max',
+    onUpdate: (s) => {
+      const v = gsap.utils.clamp(-2.6, 2.6, s.getVelocity() / -500);
+      skewSetters.forEach((fn) => fn(v));
+    }
+  });
+
+  const glow = root.querySelector('[data-dotglow]');
+  if (glow && window.matchMedia('(pointer:fine)').matches) {
+    let raf = null;
+    window.addEventListener('pointermove', (e) => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = null;
+        const m = 'radial-gradient(260px circle at ' + e.clientX + 'px ' + e.clientY + 'px, #000 0%, transparent 70%)';
+        glow.style.maskImage = m;
+        glow.style.webkitMaskImage = m;
+      });
+    });
+    gsap.to(glow, { opacity: 0.5, duration: 0.9, delay: 0.6 });
+  }
+
+  q('section[data-svc]').forEach((sec) => {
+    const bigIdx = sec.querySelector('[data-svc-index]');
+    const ico = sec.querySelector('[data-icon]');
+    if (bigIdx) {
+      gsap.fromTo(bigIdx, { yPercent: 14, opacity: 0.1 }, {
+        yPercent: -20, opacity: 0.26, ease: 'none',
+        scrollTrigger: { trigger: sec, start: 'top bottom', end: 'bottom top', scrub: 0.8 }
+      });
+    }
+    if (ico) gsap.fromTo(ico, { rotate: -8 }, { rotate: 8, ease: 'none', scrollTrigger: { trigger: sec, start: 'top bottom', end: 'bottom top', scrub: 1.2 } });
+  });
+
+  rows.forEach((r) => {
+    const num = r.querySelector('[data-num]');
+    r.addEventListener('pointerenter', () => {
+      gsap.to(r, { x: 6, color: 'var(--accent-strong)', duration: 0.35, ease, overwrite: 'auto' });
+      if (num) gsap.to(num, { x: -4, color: 'var(--text-strong)', duration: 0.35, ease, overwrite: 'auto' });
+    });
+    r.addEventListener('pointerleave', () => {
+      gsap.to(r, { x: 0, color: 'var(--text-strong)', duration: 0.45, ease, overwrite: 'auto' });
+      if (num) gsap.to(num, { x: 0, color: 'var(--text-mute)', duration: 0.45, ease, overwrite: 'auto' });
+    });
+  });
+
+  q('[data-stat]').forEach((cell) => {
+    cell.addEventListener('pointerenter', () => gsap.to(cell, { backgroundColor: 'var(--accent-wash)', duration: 0.3, ease, overwrite: 'auto' }));
+    cell.addEventListener('pointerleave', () => gsap.to(cell, { backgroundColor: 'var(--bg-card)', duration: 0.45, ease, overwrite: 'auto' }));
+  });
+
+  const eyebrow = root.querySelector('[data-eyebrow]');
+  const eyeText = eyebrow && eyebrow.lastChild;
+  if (eyeText && eyeText.nodeType === 3 && eyeText.textContent.trim()) {
+    const final = eyeText.textContent.trim();
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ/\\<>*';
+    const o = { p: 0 };
+    gsap.to(o, {
+      p: 1, duration: 1.1, delay: 0.3, ease: 'power2.inOut',
+      onUpdate: () => {
+        const n = Math.floor(o.p * final.length);
+        let out = final.slice(0, n);
+        for (let i = n; i < final.length; i++) out += chars[Math.floor(Math.random() * chars.length)];
+        eyeText.textContent = out;
+      },
+      onComplete: () => { eyeText.textContent = final; }
+    });
+  }
+
+  q('[data-magnetic]').forEach((btn) => {
+    btn.addEventListener('pointermove', (e) => {
+      const r = btn.getBoundingClientRect();
+      gsap.to(btn, { x: (e.clientX - r.left - r.width / 2) * 0.25, y: (e.clientY - r.top - r.height / 2) * 0.35, duration: 0.4, ease });
+    });
+    btn.addEventListener('pointerleave', () => gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1,0.4)' }));
+  });
+
+  // Failsafe: assert the RESULT, never the clock. Anything above the fold that is
+  // still invisible after 2s gets its JS-applied state stripped.
+  const restSel = '[data-eyebrow],[data-fade],[data-manifest],[data-manifest-row],h1[data-split] span span';
+  const forceRest = () => {
+    const vh = window.innerHeight;
+    let stranded = false;
+    q(restSel).forEach((n) => {
+      const cs = getComputedStyle(n);
+      const r = n.getBoundingClientRect();
+      const above = r.top < vh * 1.2;
+      if (!above) return;
+      if (cs.opacity === '0' || cs.visibility === 'hidden' || (cs.transform !== 'none' && cs.transform !== 'matrix(1, 0, 0, 1, 0, 0)')) {
+        stranded = true;
+        gsap.set(n, { clearProps: 'opacity,visibility,transform' });
+      }
+    });
+    if (stranded) {
+      q('[data-stat],[data-step],[data-case],[data-svc-index],[data-icon],h2[data-split] span span')
+        .forEach((n) => gsap.set(n, { clearProps: 'opacity,visibility,transform' }));
+    }
+    if (header) gsap.set(header, { clearProps: 'transform' });
+  };
+  setTimeout(forceRest, 2000);
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) return;
+    ScrollTrigger.refresh();
+    if (tl.progress() < 1) tl.resume();
+    setTimeout(forceRest, 1800);
+  });
+
+  self.initThree();
+};
+
+Component.prototype.initThree = function () {
+  const self = this;
+  const canvas = document.querySelector('[data-three]');
+  if (!canvas || canvas.dataset.on) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (document.hidden) return;
+  canvas.dataset.on = '1';
+
+  import('https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js').then((THREE) => {
+    const gsap = window.gsap;
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(52, 1, 0.1, 100);
+    camera.position.set(0, 0, 14);
+
+    const COLS = 132, ROWS = 74, SPAN_X = 34, SPAN_Y = 19;
+    const count = COLS * ROWS;
+    const pos = new Float32Array(count * 3);
+    let i = 0;
+    for (let y = 0; y < ROWS; y++) {
+      for (let x = 0; x < COLS; x++) {
+        pos[i++] = (x / (COLS - 1) - 0.5) * SPAN_X;
+        pos[i++] = (y / (ROWS - 1) - 0.5) * SPAN_Y;
+        pos[i++] = 0;
+      }
+    }
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+
+    const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+    const uniforms = {
+      uTime: { value: 0 },
+      uVel: { value: 0 },
+      uMouse: { value: new THREE.Vector2(999, 999) },
+      uBase: { value: new THREE.Color(css('--text-mute') || '#6B6B70') },
+      uAccent: { value: new THREE.Color(css('--accent-strong') || '#0455D6') },
+      uSize: { value: renderer.getPixelRatio() * 2.1 }
+    };
+    self._threeUniforms = uniforms;
+    self._threeCss = css;
+    self._threeColor = THREE.Color;
+
+    const mat = new THREE.ShaderMaterial({
+      uniforms, transparent: true, depthWrite: false,
+      vertexShader: [
+        'uniform float uTime; uniform float uVel; uniform vec2 uMouse; uniform float uSize;',
+        'varying float vGlow;',
+        'void main(){',
+        '  vec3 p = position;',
+        '  float w = sin(p.x * 0.28 + uTime * 0.55) * cos(p.y * 0.34 - uTime * 0.4);',
+        '  float w2 = sin((p.x + p.y) * 0.16 - uTime * 0.8);',
+        '  p.z += w * (1.1 + uVel * 2.4) + w2 * 0.5;',
+        '  float d = distance(p.xy, uMouse);',
+        '  float lift = exp(-d * d * 0.05);',
+        '  p.z += lift * 2.6;',
+        '  vGlow = lift;',
+        '  vec4 mv = modelViewMatrix * vec4(p, 1.0);',
+        '  gl_PointSize = uSize * (10.0 / -mv.z) * (1.0 + lift * 1.6);',
+        '  gl_Position = projectionMatrix * mv;',
+        '}'
+      ].join('\n'),
+      fragmentShader: [
+        'uniform vec3 uBase; uniform vec3 uAccent;',
+        'varying float vGlow;',
+        'void main(){',
+        '  vec2 c = gl_PointCoord - 0.5;',
+        '  float a = smoothstep(0.5, 0.12, length(c));',
+        '  if (a < 0.02) discard;',
+        '  vec3 col = mix(uBase, uAccent, clamp(vGlow * 1.4, 0.0, 1.0));',
+        '  gl_FragColor = vec4(col, a * (0.32 + vGlow * 0.6));',
+        '}'
+      ].join('\n')
+    });
+
+    const points = new THREE.Points(geo, mat);
+    points.rotation.x = -0.42;
+    scene.add(points);
+
+    const resize = () => {
+      const w = window.innerWidth, h = window.innerHeight;
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+    };
+    resize();
+    window.addEventListener('resize', resize);
+
+    const raycastPlane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+    const ray = new THREE.Raycaster();
+    const ndc = new THREE.Vector2();
+    const hit = new THREE.Vector3();
+    let pointerRaf = null;
+    if (window.matchMedia('(pointer:fine)').matches) {
+      window.addEventListener('pointermove', (e) => {
+        if (pointerRaf) return;
+        pointerRaf = requestAnimationFrame(() => {
+          pointerRaf = null;
+          ndc.x = (e.clientX / window.innerWidth) * 2 - 1;
+          ndc.y = -(e.clientY / window.innerHeight) * 2 + 1;
+          ray.setFromCamera(ndc, camera);
+          if (ray.ray.intersectPlane(raycastPlane, hit)) {
+            const local = points.worldToLocal(hit.clone());
+            gsap.to(uniforms.uMouse.value, { x: local.x, y: local.y, duration: 0.5, ease: 'power3.out' });
+          }
+        });
+      });
+    }
+
+    let visible = true;
+    window.ScrollTrigger.create({
+      trigger: document.querySelector('section'),
+      start: 'top top', end: 'bottom top',
+      onUpdate: (s) => { gsap.to(canvas, { opacity: 1 - s.progress, duration: 0.2, overwrite: true }); },
+      onLeave: () => { visible = false; },
+      onEnterBack: () => { visible = true; }
+    });
+    window.ScrollTrigger.create({
+      start: 0, end: 'max',
+      onUpdate: (s) => { uniforms.uVel.value = window.gsap.utils.clamp(-0.9, 0.9, s.getVelocity() / 3200); }
+    });
+    gsap.to(canvas, { opacity: 1, duration: 1.2, delay: 0.2 });
+
+    const clock = new THREE.Clock();
+    const tick = () => {
+      if (document.hidden || !visible) return;
+      uniforms.uTime.value = clock.getElapsedTime();
+      uniforms.uVel.value *= 0.94;
+      renderer.render(scene, camera);
+    };
+    gsap.ticker.add(tick);
+    self._threeTick = tick;
+  }).catch(() => {});
+};
+
+Component.prototype.syncThreeTheme = function () {
+  const u = this._threeUniforms;
+  if (!u || !this._threeCss) return;
+  const C = this._threeColor;
+  u.uBase.value = new C(this._threeCss('--text-mute') || '#6B6B70');
+  u.uAccent.value = new C(this._threeCss('--accent-strong') || '#0455D6');
+};
+</script>
+</body>
+
+</html>
