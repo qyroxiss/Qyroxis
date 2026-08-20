@@ -2248,6 +2248,12 @@ function bindChapterPin() {
   const wrap = document.getElementById('chapterPinWrap');
   const visualCol = document.getElementById('chapterVisualCol');
   if (!wrap || !visualCol) return;
+  // Only pin on the 2-column desktop layout (matches the min-width:900px
+  // breakpoint in CSS). On the single-column mobile layout the visual panel
+  // sits in normal flow below ~180vh of stacked chapter text, so pinning it
+  // from the top of the wrap fixes it at an off-screen position below the
+  // viewport for the whole section instead of visible beside the text.
+  if (!window.matchMedia('(min-width: 900px)').matches) return;
   const panels = wrap.querySelectorAll('.chapter-panel');
   const dots = wrap.querySelectorAll('.chapter-dots span');
   ScrollTrigger.create({
@@ -2288,6 +2294,7 @@ function bindBrandCinema() {
       start: 'top top',
       end: () => '+=' + (frames.length - 1) * window.innerHeight,
       scrub: true,
+      snap: 1 / (frames.length - 1),
       anticipatePin: 1,
       invalidateOnRefresh: true,
       onUpdate: self => {
