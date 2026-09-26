@@ -36,6 +36,13 @@ import charmShotHomeDesktop from './assets/img/projects/charm-avenue/desktop-hom
 import charmShotProductMobile from './assets/img/projects/charm-avenue/mobile-product.jpg';
 import charmShotShopDesktop from './assets/img/projects/charm-avenue/desktop-shop.jpg';
 import charmShotShopMobile from './assets/img/projects/charm-avenue/mobile-shop.jpg';
+import outlyThumb from './assets/img/projects/outly/thumb.png';
+import outlyShotTerminal from './assets/img/projects/outly/screen-terminal.png';
+import outlyShotFilters from './assets/img/projects/outly/screen-filters.png';
+import outlyShotAutomation from './assets/img/projects/outly/screen-automation.png';
+import outlyShotApi from './assets/img/projects/outly/screen-api.png';
+import outlyBeyondModes from './assets/img/projects/outly/beyond-modes.png';
+import outlyBeyondTrail from './assets/img/projects/outly/beyond-trail.png';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
@@ -202,9 +209,9 @@ const PROJECTS = [
     id: "charm-avenue", icon: "i-cart", domain: "www.charmavenue.in", thumb: thumbCharmAvenue, year: "2026",
     themeColor: "#F7E3E1",
     logoHTML: `<div style="font-family:Georgia,serif;font-style:italic;font-weight:700;font-size:1.7rem;color:#8C2A3A;">Charm <span style="color:#C62439;">Avenue</span></div>`,
-    title: "Charm Avenue by Nandini", category: "D2C E-Commerce Platform",
+    title: "Charm Avenue", category: "D2C E-Commerce Platform",
     description: "A full storefront and admin platform for a growing accessories brand, with WhatsApp-first checkout instead of a payment gateway, built to move fast without transaction fees.",
-    fullDescription: "Charm Avenue by Nandini is a direct-to-consumer accessories and gifting brand. We built its storefront and back office as a single system: product catalog, cart, and a WhatsApp-based checkout flow, backed by a full admin panel for running the business day to day.",
+    fullDescription: "Charm Avenue is a direct-to-consumer accessories and gifting brand. We built its storefront and back office as a single system: product catalog, cart, and a WhatsApp-based checkout flow, backed by a full admin panel for running the business day to day.",
     challenge: "As a small, fast-moving D2C brand, Charm Avenue needed a storefront without payment-gateway overhead, and a catalog the team could update themselves, without a developer.",
     solution: "A Next.js and TypeScript storefront on Supabase, with WhatsApp-based checkout instead of a payment gateway, plus a full admin panel for products, discounts, and orders.",
     solutionPoints: ["Next.js + TypeScript storefront on Supabase", "WhatsApp checkout, no payment gateway", "Full admin panel for products & discounts"],
@@ -213,7 +220,7 @@ const PROJECTS = [
     stats: [["0%", "payment gateway fees, checkout runs through WhatsApp"]],
     tags: ["Next.js", "React", "TypeScript", "Supabase", "PostgreSQL", "Tailwind CSS"],
     quote: "We can launch a new collection or run a sale ourselves, same day, no waiting on anyone.",
-    quoteRole: "Founder, Charm Avenue by Nandini",
+    quoteRole: "Founder, Charm Avenue",
     reviews: [
       { name: "Meenal S.", role: "Customer", text: "Ordered a gift set and checkout just opened WhatsApp, paid the seller directly, didn't have to enter my card anywhere." },
       { name: "Tanvi J.", role: "Customer", text: "Found exactly what I wanted in the catalog in under a minute, the filters actually work instead of just being there for show." },
@@ -229,6 +236,54 @@ const PROJECTS = [
       { type: "laptop", kind: "image", src: charmShotShopDesktop, caption: "Full catalog, 90+ products", blurb: "90-plus products, organized so browsing never feels endless." },
       { type: "laptop", kind: "image", src: charmShotHomeDesktop, caption: "Storefront, styled for the brand", blurb: "A storefront that looks hand-built for the brand, because it was." }
     ]
+  },
+  {
+    id: "outly", icon: "i-bot", domain: "outlyai.vercel.app", thumb: outlyThumb, year: "2026",
+    themeColor: "#0B0B0C",
+    logoHTML: `<div style="display:flex;align-items:center;gap:0.42em;font-family:var(--font-display);font-size:1.6rem;">
+      <span style="width:1.9em;height:1.9em;border-radius:0.55em;background:#fff;display:inline-flex;align-items:center;justify-content:center;flex:none;">
+        <svg width="0.66em" height="0.66em" viewBox="0 0 24 24" fill="none" style="display:block;">
+          <circle cx="11" cy="13" r="7" stroke="#0B0B0C" stroke-width="2.1" stroke-dasharray="33 11" stroke-linecap="round" transform="rotate(-45 11 13)"/>
+          <path d="M11 13 L17.5 6.5 M17.5 6.5 H12.3 M17.5 6.5 V11.7" stroke="#0B0B0C" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <span style="font-weight:800; letter-spacing:-0.01em; color:#fff;">Outly</span>
+    </div>`,
+    title: "Outly", category: "Proprietary AI Agent",
+    description: "Find the opening. Write the opener. Outly is our own autonomous research agent: point it at a company or hand it a résumé, and it reads the sites, careers pages, ATS boards and job boards, weighs what it finds, and gives back an email that's ready to send.",
+    fullDescription: "Outly runs the same research pipeline in reverse depending on who's asking. Recruiters point it at a company: it finds the real official site, scrapes the careers page and the ATS boards behind it, reads hiring signals and recent news, and drafts a subject and body grounded in that evidence, not a merge-field template. Candidates point it at themselves: upload a résumé once and it sweeps LinkedIn, Indeed, Glassdoor and Google Jobs on a schedule, scores every survivor 0-100 with its reasoning, and writes a cover letter for the postings worth applying to.",
+    challenge: "Cold outreach and job hunting are the same task in disguise: find the right target, prove you did the homework, and get one honest message in front of the right person, and both sides burn hours doing it by hand.",
+    solution: "One agent, run in reverse depending on who's asking. It sweeps four sources, weighs what it finds against real filters, geography, seniority, experience, a standing blocklist, then writes the subject and body from that evidence trail. A scheduler keeps the job-search side running twice a day, delivering a scored, ready-to-act-on digest straight to Telegram.",
+    solutionPoints: ["Point it at a company: real site, careers page, and ATS boards found and scraped in seconds", "Point it at a résumé: 4 job boards swept and scored 0-100 with reasoning", "5 hard filters (geography, seniority, experience, blocklist) run before an LLM ever sees a listing", "Every digest lands twice a day in Telegram, approve or reject inline"],
+    impact: "The best filter is the one that deletes things: Outly throws away almost everything it finds so what reaches you is worth the thirty seconds it takes to read, on either side of the table.",
+    impactPoints: ["<60s from a company name to a drafted, evidence-backed email", "0-100 match score with reasoning on every surviving listing", "2 scored digests delivered to Telegram every weekday", "3h freshness window, widened to 24h only when the queue runs dry"],
+    stats: [["<60s", "company name to drafted email"], ["4", "sources swept per run"], ["2x", "digest delivered daily"]],
+    tags: ["Python", "FastAPI", "Next.js", "Groq LLM", "Telegram Bot API", "SSE"],
+    quote: "It doesn't just find the opening, it writes the opener, evidence-backed, in under a minute.",
+    quoteRole: "Sahil Singh, Founder, Qyroxis",
+    demo: { action: "Draft outreach email", busy: "Researching company…", result: "Email drafted", sub: "in under a minute" },
+    // Real screenshots of the redesigned outlyai.vercel.app - a proper landing page now (Next.js,
+    // wide dashboard-style sections), which fits the "laptop" device frame far better than the old
+    // narrow utility UI this project used to show (see git history), so this rewrite switches back
+    // to laptop from phone framing.
+    screens: [
+      { type: "laptop", kind: "image", src: outlyShotTerminal, caption: "Point it at a company", blurb: `outly investigate "Razorpay": search, scrape, signals, and a drafted email, streamed live in under a minute.` },
+      { type: "laptop", kind: "image", src: outlyShotFilters, caption: "The best filter is the one that deletes things", blurb: "Geography, seniority, experience, and a standing blocklist, all tunable, all run before a single listing is scored." },
+      { type: "laptop", kind: "image", src: outlyShotAutomation, caption: "It keeps working after you close the tab", blurb: "A scheduler runs the whole search twice a day and delivers the digest to Telegram, approve or reject with one tap." },
+      { type: "laptop", kind: "image", src: outlyShotApi, caption: "Every pipeline is one POST away", blurb: "Authenticate with an API key and run the same research from your own ATS, CRM, or cron job." }
+    ],
+    brandMoment: {
+      accent: "#3b82f6",
+      eyebrow: "Beyond the dashboard",
+      title: "We didn't just build one product. We built one engine that works from both sides of the table.",
+      lead: "Outly isn't only a form a recruiter fills in. Point the same engine at a résumé instead and it hunts the job boards on a schedule, and every subject line, in either direction, is written from evidence, not a guess.",
+      shots: [
+        { src: outlyBeyondModes, tag: "Both sides of the table", caption: "The same research pipeline, run in reverse: recruiters point it at companies, candidates point it at themselves." },
+        { src: outlyBeyondTrail, tag: "The evidence trail", caption: "Five steps, in order, before a single word gets written: point, collect, weigh, write, act." }
+      ],
+      detail: "Every screenshot on this page is a real run, not a design mockup: this exact draft, for this exact company, generated live.",
+      detailChip: { icon: ">_", code: "outly investigate \"Razorpay\"", sub: "the real command that produced it" }
+    }
   }
 ];
 
@@ -236,7 +291,7 @@ const SERVICES = [
   {
     slug: "ai-automation", icon: "i-bot", title: "AI & Automation Agents", desc: "Autonomous systems that take on the manual work: lead generation, data extraction, qualification.",
     detail: "We build autonomous agents that handle the repetitive, high-volume work your team shouldn't have to do by hand: browsing, extracting, qualifying, and acting on data at a scale manual research can't match.",
-    examples: [], flow: ["i-doc", "i-bot", "i-check"],
+    examples: ["outly"], flow: ["i-doc", "i-bot", "i-check"],
     included: [
       "One agent, scoped to a real workflow you already run",
       "Explicit rules and guardrails, not a black-box model score",
@@ -262,7 +317,7 @@ const SERVICES = [
         { label: "Zero manual entry", caption: "data lands structured, first time" },
         { label: "Scales flat", caption: "more volume, no extra headcount" }
       ],
-      cases: []
+      cases: [{ id: "outly", blurb: "Our own agent: company name in, personalized draft out, in under a minute. Same engine also runs job search." }]
     }
   },
   {
@@ -421,7 +476,7 @@ const VALUES = [
 
 const TIMELINE = [
   { year: "2026", title: "Studio founded", desc: "Founded in Bengaluru, then based out of Kanpur, built to engineer full-stack, cross-platform, and AI-driven software from day one." },
-  { year: "2026", title: "First AI agent shipped", desc: "Our first proprietary AI lead-generation agent goes live, autonomously analyzing target companies and drafting personalized outbound campaigns." },
+  { year: "2026", title: "First AI agent shipped", desc: "Outly, our first proprietary AI lead-generation agent, goes live: autonomously researching target companies and drafting personalized outbound emails." },
   { year: "2026", title: "Expanded into new industries", desc: "The same year of iteration carried us into fitness (gym management ecosystems), healthcare, and e-commerce, adapting our architecture to each vertical." },
   { year: "2026", title: "Today", desc: "Building smarter web platforms and autonomous digital agents; deeper LLM integrations and new AI-driven products are next." }
 ];
@@ -550,7 +605,7 @@ function brandCinemaHTML(p) {
       </div>
     </div>` : ''
   ].filter(Boolean);
-  return `<section class="brand-cinema" id="brandCinemaWrap">
+  return `<section class="brand-cinema" id="brandCinemaWrap"${bm.accent ? ` style="--cinema-accent:${bm.accent};"` : ''}>
     <div class="cinema-track" id="cinemaTrack">${frames.join('')}</div>
     <div class="cf-dots" id="cfDots">${frames.map((_, i) => `<i class="${i === 0 ? 'active' : ''}"></i>`).join('')}</div>
   </section>`;
