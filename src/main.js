@@ -872,7 +872,7 @@ function footer() {
           </ul>
           <div class="foot-company-ctas">
             <a class="foot-btn light" href="#/contact" data-nav>Start a project</a>
-            <a class="foot-btn outline" href="mailto:contact@qyroxis.com?subject=Let%27s%20schedule%20a%20call">Book a call</a>
+            <a class="foot-btn outline" href="mailto:qyroxis@gmail.com?subject=Let%27s%20schedule%20a%20call">Book a call</a>
           </div>
           <div class="foot-social">
             <a href="https://www.instagram.com/qyroxis?igsh=eDF1aGdncjJzdG1z" target="_blank" rel="noopener" aria-label="Instagram">${icon('i-instagram')}</a>
@@ -1500,7 +1500,7 @@ function pagePrivacy() {
         <p>We keep inquiry and project information for as long as it's relevant to our relationship with you, or as needed for legitimate business and legal record-keeping, after which we delete it.</p>
 
         <h2>Your rights</h2>
-        <p>You can ask us to access, correct, or delete the personal information we hold about you at any time by emailing <a href="mailto:contact@qyroxis.com">contact@qyroxis.com</a>.</p>
+        <p>You can ask us to access, correct, or delete the personal information we hold about you at any time by emailing <a href="mailto:qyroxis@gmail.com">qyroxis@gmail.com</a>.</p>
 
         <h2>Security</h2>
         <p>We take reasonable technical and organizational measures to protect your information, but no method of transmission or storage is completely secure, and we can't guarantee absolute security.</p>
@@ -1512,7 +1512,7 @@ function pagePrivacy() {
         <p>We may update this policy as our practices evolve. Material changes will be reflected by updating the date at the top of this page.</p>
 
         <h2>Contact us</h2>
-        <p>Questions about this policy? Reach us at <a href="mailto:contact@qyroxis.com">contact@qyroxis.com</a>, or find us in Bangalore, India.</p>
+        <p>Questions about this policy? Reach us at <a href="mailto:qyroxis@gmail.com">qyroxis@gmail.com</a>, or find us in Bangalore, India.</p>
       </div>
     </div>
   </section>`;
@@ -1554,7 +1554,7 @@ function pageTerms() {
         <p>We may update these terms from time to time. Continued use of the site after changes means you accept the updated terms.</p>
 
         <h2>Contact us</h2>
-        <p>Questions about these terms? Reach us at <a href="mailto:contact@qyroxis.com">contact@qyroxis.com</a>.</p>
+        <p>Questions about these terms? Reach us at <a href="mailto:qyroxis@gmail.com">qyroxis@gmail.com</a>.</p>
       </div>
     </div>
   </section>`;
@@ -1578,8 +1578,11 @@ function pageContact() {
               <span class="eyebrow">( Get in touch )</span>
               <h2>Let's build what's next.</h2>
               <div class="gp-rows">
-                <a class="gp-row" href="mailto:contact@qyroxis.com">
-                  <span class="gp-label">Email</span><span class="gp-value">contact@qyroxis.com</span>
+                <a class="gp-row" href="mailto:qyroxis@gmail.com">
+                  <span class="gp-label">Email</span><span class="gp-value">qyroxis@gmail.com</span>
+                </a>
+                <a class="gp-row" href="tel:+919194156625">
+                  <span class="gp-label">Phone</span><span class="gp-value">+91 91941 56625</span>
                 </a>
                 <div class="gp-row"><span class="gp-label">Location</span><span class="gp-value">Bangalore, India</span></div>
                 <div class="gp-row"><span class="gp-label">Local time</span><span class="gp-value" id="clockValue">&nbsp;</span></div>
