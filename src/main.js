@@ -48,6 +48,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
+// Mobile browsers resize the viewport as the address bar collapses/expands on
+// scroll; without this, ScrollTrigger treats that as a real resize and
+// recalculates every trigger's start/end mid-scroll, which can leave a
+// pinned/reveal section briefly misaligned or stuck in its hidden state.
+ScrollTrigger.config({ ignoreMobileResize: true });
 
 const LOGO_LIGHT = logoLightUrl; /* white wordmark, use on dark bg */
 const LOGO_DARK = logoDarkUrl;  /* black wordmark, use on light bg */
@@ -488,7 +493,6 @@ const CONTACT_STEPS = [
 ];
 
 const FOOTER_SERVICES = ["AI Agents", "Web Platforms", "Mobile Apps", "E-Commerce", "Healthcare Software", "Full-Stack Dev"];
-const TOOLS = ["Python", "Node.js", "React", "Flutter", "Next.js", "Supabase", "LangChain", "PostgreSQL"];
 
 // 4th field is the PROJECTS id backing this stat (labels above don't reliably
 // match p.id/p.title  e.g. "Vishal Fitness" vs the real id "pulse" / title
@@ -996,12 +1000,6 @@ function pageHome() {
     </div>
     ${renderStatBand()}
   </section>
-
-  <div class="marquee-text-strip">
-    <div class="marquee-track" style="animation-duration:38s;">
-      ${Array(4).fill(TOOLS.map(t => `<span class="marquee-text-item"><span class="dot"></span>${t}</span>`).join('')).join('')}
-    </div>
-  </div>
 
   <section class="block">
     <div class="wrap">

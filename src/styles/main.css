@@ -970,7 +970,7 @@ nav.top-nav.scrolled {
   display: block;
 }
 
-/* ---------- marquee (apps gallery + tools + footer) ---------- */
+/* ---------- marquee (apps gallery + footer) ---------- */
 .marquee-strip {
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
@@ -1025,33 +1025,6 @@ nav.top-nav.scrolled {
   font-family: var(--font-mono);
   font-size: 0.68rem;
   color: var(--text);
-}
-
-.marquee-text-strip {
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: 20px 0;
-  overflow: hidden;
-}
-
-.marquee-text-item {
-  display: flex;
-  align-items: center;
-  gap: 26px;
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--text-faint);
-  white-space: nowrap;
-  padding-right: 26px;
-}
-
-.marquee-text-item .dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--accent-strong);
 }
 
 /* ---------- trust / stat strip ---------- */
@@ -2389,6 +2362,17 @@ section.block {
 .svc-block-sticky {
   position: sticky;
   top: calc(var(--svc-head) + var(--svc-rail-h) + 16px);
+}
+
+/* Below 900px .svc-block-grid is already a single column (auto-fit collapses
+   it there), so there's nothing beside the sticky column for it to stay
+   level with - it only has room to stick over the body copy that follows it
+   in the same column, which is what caused the overlapping-text glitch. */
+@media (max-width: 899px) {
+  .svc-block-sticky {
+    position: static;
+    top: auto;
+  }
 }
 
 .svc-num {
@@ -3786,7 +3770,11 @@ section.block {
   transform: scale(1.3);
 }
 
-@media (prefers-reduced-motion: reduce) {
+/* Below 900px, bindChapterPin() never pins .chapter-visual-col (see its
+   matchMedia guard) - the 60vh-per-step reserve exists only to give the
+   desktop pin something to scroll through, so without it mobile just shows
+   three short text blocks stranded in a tall, near-empty column. */
+@media (prefers-reduced-motion: reduce), (max-width: 899px) {
   .chapter-step { min-height: 0; padding: 24px 0; }
   .chapter-visual-col, .chapter-visual-inner { height: auto; min-height: 320px; }
 }
@@ -4820,13 +4808,11 @@ footer.site-foot {
 }
 
 /* -- marquee edge-fade + hover-pause (Components: Marquee, upgraded) -- */
-.marquee-strip,
-.marquee-text-strip {
+.marquee-strip {
   -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 64px, #000 calc(100% - 64px), transparent 100%);
   mask-image: linear-gradient(90deg, transparent 0, #000 64px, #000 calc(100% - 64px), transparent 100%);
 }
 
-.marquee-strip:hover .marquee-track,
-.marquee-text-strip:hover .marquee-track {
+.marquee-strip:hover .marquee-track {
   animation-play-state: paused;
 }
