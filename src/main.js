@@ -1471,7 +1471,7 @@ function pagePrivacy() {
   <section class="block" style="padding-top:0;">
     <div class="wrap">
       <div class="legal-content">
-        <p class="legal-updated">Last updated: 5 August 2026</p>
+        <p class="legal-updated">Last updated: 30 October 2026</p>
 
         <h2>Overview</h2>
         <p>Qyroxis ("we", "us", "our") is a software and AI engineering studio based in Bangalore, India. This policy explains what information we collect through qyroxis.com, how we use it, and the choices you have.</p>
@@ -1481,7 +1481,7 @@ function pagePrivacy() {
         <p>We also store one small piece of data locally in your browser: your light/dark theme preference. This is saved via <code>localStorage</code> on your device, is never transmitted to us, and contains no personal information.</p>
 
         <h2>Cookies and tracking</h2>
-        <p>We do not currently use analytics, advertising, or third-party tracking cookies on this site. If that changes, we'll update this policy to reflect it.</p>
+        <p>We use <a href="https://clarity.microsoft.com/" target="_blank" rel="noopener">Microsoft Clarity</a> to understand how visitors use this site, for example which pages are visited, how far people scroll, and where they click. Clarity uses cookies and similar technologies to collect this usage data, including session replays and heatmaps, and masks text you type into forms. The data is processed by Microsoft under its <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener">Privacy Statement</a>. We don't use advertising cookies.</p>
 
         <h2>How we use your information</h2>
         <ul>
